@@ -1,0 +1,8 @@
+\begin{thebibliography}{GVW12}
+
+\bibitem[GVW12]{C:GorVaiWee12}
+Sergey Gorbunov, Vinod Vaikuntanathan, and Hoeteck Wee.
+\newblock Functional encryption with bounded collusions via multi-party computation.
+\newblock In Reihaneh Safavi-Naini and Ran Canetti, editors, {\em CRYPTO~2012}, volume 7417 of {\em {LNCS}}, pages 162--179. Springer, Heidelberg, August 2012.
+
+\end{thebibliography}

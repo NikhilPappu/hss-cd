@@ -1,0 +1,251 @@
+%
+\def\llncs{0}
+\def\fullpage{1}
+\def\anonymous{0}
+\def\authnote{1}
+\def\notxfont{0}
+\def\submission{0}
+\def\reply{0}
+\def\cameraready{0}
+\def\noaux{0}
+%%%%%%%%%%%% Define modes %%%%%%%%%%%%%
+\ifnum\submission=1
+\def\anonymous{1}
+\def\llncs{1}
+\else
+\fi
+
+
+\ifnum\cameraready=1
+\def\llncs{1}
+\def\anonymous{0}
+\def\authnote{0}
+\else
+\fi
+
+\ifnum\anonymous=1
+%\def\llncs{1}
+\def\authnote{0}
+\else
+\fi
+
+
+\ifnum\llncs=1
+	\documentclass[envcountsect,a4paper,runningheads]{llncs}
+\else
+	\documentclass[letterpaper,hmargin=1.05in,vmargin=1.05in]{article}
+			\ifnum\fullpage=1
+		\usepackage{fullpage}
+		\fi
+\fi
+
+\ifnum\reply=1
+\usepackage{ulem}
+\renewcommand{\emph}{\textit}
+\else
+\fi
+
+
+%%%%% Joc revision setting------------------------------------------
+% \ifnum\reply=0  %%%%% Remove comments %%%%%
+% \newcommand{\revise}[1]{#1}
+% \newcommand{\strike}[1]{}
+% \else
+% \newcommand{\revise}[1]{{\color{red}{#1}}}
+% \newcommand{\strike}[1]{\sout{#1}}
+% \fi
+
+
+%=========  Preamble Part ===========
+\input{preamble_usepackages.tex}
+\input{macros_basic.tex}
+\input{macros_adhoc.tex}
+
+\newcommand{\authornote}[3]{\textcolor{#3}{[\textbf{#1:} {#2}]}}
+\ifnum\authnote=1
+\newcommand{\fuyuki}[1]{\authornote{fuyuki}{#1}{chocolate}}
+\newcommand{\ryo}[1]{\authornote{ryo}{#1}{darkblue}}
+\else
+\newcommand{\fuyuki}[1]{}
+\newcommand{\ryo}[1]{}
+\fi
+
+
+%-------- START: LNCS branch ----------
+\ifnum\llncs=1
+%  See the following url for the meaning of the commands.   https://tex.stackexchange.com/questions/160053/vec-conflict-between-llncs-cls-and-mnsymbol
+\let\oldvec\vec% Store \vec in \oldvec
+%\usepackage{llncsdoc}
+\let\vec\oldvec% Restore \vec from \oldvec
+%
+% for page number llncs
+%\pagestyle{headings} 
+%
+% make a proper TOC despite llncs
+\setcounter{tocdepth}{2}
+\makeatletter
+\renewcommand*\l@author[2]{}
+\renewcommand*\l@title[2]{}
+\makeatletter
+\fi    
+%-------- END: LNCS branch ----------
+
+\theoremstyle{remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{experiment}{Experiment}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{counterexample}[theorem]{Counterexample}
+
+
+
+
+%================================
+%=========  MAIN BODY ============    
+%================================
+
+\ifnum\submission=1
+\title{
+\textbf{Collusion-Resistant PKE with Secure Key Leasing}\thanks{{\color{red}{\emph{We attached the full version of this paper as a supplementary material}}}.}
+}
+\else
+\title{
+\textbf{Homomorphic Secret-Sharing with Certified Deletion}
+}
+\fi
+
+
+%\date{}
+\begin{document}
+%\author{}
+%\institute{}
+
+
+\ifnum\anonymous=1 
+\ifnum\llncs=1
+% for anonymized LNCS version
+\author{\empty}\institute{\empty}
+\else
+% for anonymized full version
+\author{}
+\fi
+\else
+%
+%  For camera ready version.
+%
+\ifnum\llncs=1
+\author{
+	Nikhil Pappu\inst{1}
+}
+\institute{Portland State University
+	}
+\else
+%
+%   For full/eprint version, etc.
+%
+\author[$\dagger$]{\hskip 1em Nikhil Pappu}
+\affil[$\dagger$]{{\small Portland State
+University}\authorcr{\small nikpappu@pdx.edu}}
+\renewcommand\Authands{, }
+\fi %%%%% END OF LNCS branch
+\fi
+
+\ifnum\llncs=1
+\date{}
+\else
+\ifnum\anonymous=0
+\date{\today}
+\else
+\date{}
+\fi
+\fi
+
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+
+
+\ifnum\llncs=1
+\else
+\newpage
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\newpage
+\fi
+
+%\input{intro}
+\input{preliminaries}
+\input{defn\_hss\_cd}
+\input{const\_from\_vbb}
+
+\newpage
+
+\ifnum\anonymous=1
+\else
+% \section*{Acknowledgement}
+
+\fi
+
+	\ifnum\llncs=1
+%\bibliographystyle{bib/extreme_alpha}
+\bibliographystyle{splncs04}
+\bibliography{bib/abbrev3,bib/crypto,bib/siamcomp_jacm,bib/other}
+	% \input{compressed_bib}
+	\else
+\bibliographystyle{alpha} 
+\bibliography{bib/abbrev3,bib/crypto,bib/siamcomp_jacm,bib/other}
+	\fi
+
+
+
+\ifnum\cameraready=0
+	\ifnum\llncs=0
+	%%%%%% Full version region %%%%%%
+	\appendix
+%%% appendix files here
+\else
+%%%%% LNCS-style submission version region %%%%%
+\if0
+	\newpage
+	 	\appendix
+	 	\setcounter{page}{1}
+ 	{
+	\noindent
+ 	\begin{center}
+	{\Large SUPPLEMENTAL MATERIALS}
+	\end{center}
+ 	}
+	\setcounter{tocdepth}{2}
+	 	\ifnum\noaux=1
+ 	\else
+{\color{red}{We attached the full version of this paper as a separated file (auxiliary supplemental material) for readability. It is available from the program committee members.}}
+
+\fi
+\fi
+	
+
+
+
+	
+	
+
+	\setcounter{tocdepth}{2}
+	\tableofcontents
+
+	\fi
+	\else
+	%%%%%%% Camera-ready region (no appendix) %%%%%%
+\fi
+
+
+%
+%
+%
+
+\end{document}

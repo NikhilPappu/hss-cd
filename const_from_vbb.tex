@@ -1,0 +1,44 @@
+\section{HSS-CD from VBB Obfuscation}\label{sec:hss-cd}
+
+We construct a (1,2)-HSS-CD scheme $\HSScd = \HSScd.(\Sh,\Ev,\qDel,
+\qVrfy)$ using
+the following building blocks:
+
+\begin{itemize}
+\item PRF Family $\{F_\key\}_\key$.
+\item SKE-CD scheme $\SKEcd=\SKEcd.(\KG, \qEnc, \qDec, \qDel,
+\qVrfy)$ with classical decryption property and algorithm $\CDec$.
+\item VBB Obfuscation for the following programs:
+    \begin{description}
+        \item [$\Prog_1(C, u)$]
+            \{Hard-coded values: $\key, \sk$\}:
+            \begin{itemize}
+                \item Compute $v = \CDec(\sk, u)$.
+                \item Output $F_\key(C, v)$.
+            \end{itemize}
+
+        \item [$\Prog_2(C, u)$:]
+            \{Hard-coded values: $\key, \sk$\}:
+            \begin{itemize}
+                \item Compute $v = \CDec(\sk, u)$.
+                \item Output $F_\key(C, v) \xor C(v)$.
+            \end{itemize}
+    \end{description}
+\end{itemize}
+
+The construction is as follows:
+
+\begin{description}
+\item [$\HSScd.\Sh(1^\lambda, i, b)$:] $ $
+\begin{enumerate}
+\item Generate $\key \gets \{0, 1\}^\lambda$.
+\item Generate $\sk \gets \KG(1^\lambda)$.
+\item Compute $\qct \gets \qEnc(\sk, b)$.
+\item Compute $\OProg_i = \VBB.\Obf(\Prog_i)$ using the values
+$\key, \sk$.
+\item Output $\qsh_i = (\qct, \OProg_i)$.
+\end{enumerate}
+
+\item [$\HSScd.\Eval(1^\lambda, C, \qsh_i)$:] $ $
+
+\end{description}

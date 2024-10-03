@@ -1,0 +1,4 @@
+\providecommand \autonum@processReference [2]{}
+\contentsline {section}{\numberline {1}Preliminaries}{3}{section.1}%
+\contentsline {section}{\numberline {2}HSS with Certified Deletion}{3}{section.2}%
+\contentsline {section}{\numberline {3}HSS-CD from VBB Obfuscation}{3}{section.3}%

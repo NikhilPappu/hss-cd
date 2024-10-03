@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2023/Arch Linux)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: alpha.bst
+Database file #1: bib/abbrev3.bib
+Reallocated str_pool (elt_size=1) to 130000 items from 65000.
+Reallocated str_pool (elt_size=1) to 195000 items from 130000.
+Database file #2: bib/crypto.bib
+Database file #3: bib/siamcomp_jacm.bib
+Database file #4: bib/other.bib
+You've used 1 entry,
+            2543 wiz_defined-function locations,
+            13678 strings with 159771 characters,
+and the built_in function-call counts, 674 in all, are:
+= -- 66
+> -- 33
+< -- 2
++ -- 11
+- -- 11
+* -- 54
+:= -- 108
+add.period$ -- 4
+call.type$ -- 1
+change.case$ -- 7
+chr.to.int$ -- 1
+cite$ -- 1
+duplicate$ -- 27
+empty$ -- 47
+format.name$ -- 12
+if$ -- 144
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 1
+newline$ -- 8
+num.names$ -- 5
+pop$ -- 7
+preamble$ -- 1
+purify$ -- 8
+quote$ -- 0
+skip$ -- 26
+stack$ -- 0
+substring$ -- 39
+swap$ -- 13
+text.length$ -- 2
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 8
+warning$ -- 0
+while$ -- 7
+width$ -- 2
+write$ -- 17

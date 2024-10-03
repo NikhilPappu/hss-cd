@@ -1,0 +1,22 @@
+\section{HSS-CD from Sub-Exponential iO}\label{sec:hss-cd}
+
+We construct a (1,2)-HSS-CD scheme $\HSScd = \HSScd.(\Sh,\Ev)$ using
+the following building blocks:
+
+\begin{itemize}
+\item Probabilistic Indistinguishability Obfuscation scheme $\pIO$.
+\item SKE-CD scheme $\SKEcd=(\KG, \qEnc, \qDec, \qDel, \Vrfy)$ with
+classical decryption property and algorithm $\CDec$.
+\end{itemize}
+
+The construction is as follows:
+
+\begin{description}
+\item [$\HSScd.\Sh(1^\lambda, b)$:] $ $
+\begin{itemize}
+\item Generate $\sk \gets \KG(1^\lambda)$.
+\item Generate $\ct \gets \qEnc(\sk, b)$.
+
+\end{itemize}
+
+\end{description}
