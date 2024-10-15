@@ -423,10 +423,39 @@ $\expb{\SScd,(\qR_0, \qR_1)}{ss}{cd}(1^\secp,b)$:
 \FHEcd.\Setup(1^\secp)$. It sets $s_0 \seteq 0^\secp$ and $s_1
 \seteq \sk$ and sends $(s_0, s_1)$ to the challenger.
 \item The challenger computes $(\qsh, \csh, \vk) \leftarrow
-\SScd.\Sh(s_b)$. It sends $\csh$ to $\qR_0$ and $\qsh$ to $\qR_1$.
-
+\Sh(s_b)$. It sends $\csh$ to $\qR_0$ and $\qsh$ to $\qR_1$.
+\item $\qR_0$ runs $\qA_0$. $\qA_0$ sends $(s'_0, s'_1)$ to $\qR_0$.
+\item $\qR_0$ sends $(\pk, \qct, \csh)$ to $\qA_0$, where
+$\qct \leftarrow \FHEcd.\qEnc(\pk, s'_c)$ and $c \leftarrow \bit$.
+\item $\qA_0$ sends $R_0'$ to $\qR_0$. $\qR_0$ sets $R_0 \seteq
+(R_0', c)$ and sends it to the challenger.
+\item $\qR_1$ runs $\qA_1$ on input $\qsh$. If $\qA_1$ outputs
+($\cert_1$, $R_1'$), then $\qR_1$ sets $R_1 \seteq R_1'$ and sends
+it to the challenger.
+\item The challenger computes $\ans = \Vrfy(\vk, \cert_1)$. If $\ans
+= \top$, it outputs $(R_0, R_1)$.
 \end{enumerate}
 \end{description}
+
+Consider now the experiment $\expb{\SScd,(\qR_0,
+\qR_1)}{ss}{cd}(1^\secp,0)$. Notice that if there exists a
+QPT algorithm $\qA$ that obtains the registers $(R_0', R_1')$ and
+outputs $c' = c$ with probability $\frac12 + \nonnegl(\secp)$, then
+the security of $\FHEcd$ is broken. This is because a reduction can
+obtain an $\FHEcd$ ciphertext and simulate the view os $\qA_0,
+\qA_1$ as needed, because knowledge of $\sk$ is not required.
+
+By assumption, there exists a QPT algorithm $\qA$ that obtains
+$(R_0', R_1')$ and outputs $c'=c$ with probability $\frac12 +
+\nonnegl(\secp)$ in the experiment $\expb{\SScd,(\qR_0,
+\qR_1)}{ss}{cd}(1^\secp,1)$.
+
+Now, consider an algorithm $\qR$ that obtains $(R_0 = (c, R_0'),
+R_1 = R_1')$. It runs $\qA$ on $(R_0', R_1')$ and checks if the
+value $c'$ equals $c$ or not. If it is, then $\qR$ outputs $b'=1$,
+otherwise it outputs $b'=0$. Consequently, $\qR$ outputs $b'=b$ with
+probability $\frac12 + \nonnegl(\secp)$, breaking the security of
+the scheme $\SScd$. This gives us a contradiction.
 \end{proof}
 
 \subsection{Impossibility Results}

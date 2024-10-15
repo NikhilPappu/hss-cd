@@ -19,7 +19,7 @@ badd +1 main.tex
 badd +1 defn_hss_cd.tex
 badd +1 macros_basic.tex
 badd +1 macros_adhoc.tex
-badd +377 hss-cd.tex
+badd +441 hss-cd.tex
 badd +1 ../col_res_skl/const-CDSKE-CDec-NM.tex
 badd +21 preamble_usepackages.tex
 argglobal
@@ -65,12 +65,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 416 - ((18 * winheight(0) + 18) / 37)
+let s:l = 442 - ((16 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 416
-normal! 08|
+keepjumps 442
+normal! 035|
 tabnext
 edit ../col_res_skl/const-CDSKE-CDec-NM.tex
 argglobal
@@ -93,6 +93,18 @@ keepjumps 204
 normal! 0
 tabnext
 edit macros_basic.tex
+let s:save_splitbelow = &splitbelow
+let s:save_splitright = &splitright
+set splitbelow splitright
+let &splitbelow = s:save_splitbelow
+let &splitright = s:save_splitright
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
 argglobal
 balt defn_hss_cd.tex
 setlocal fdm=manual
@@ -105,12 +117,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 144 - ((23 * winheight(0) + 18) / 37)
+let s:l = 958 - ((12 * winheight(0) + 13) / 26)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 144
-normal! 015|
+keepjumps 958
+normal! 014|
 tabnext
 edit macros_adhoc.tex
 argglobal
@@ -156,6 +168,8 @@ endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20
 let &shortmess = s:shortmess_save
+let &winminheight = s:save_winminheight
+let &winminwidth = s:save_winminwidth
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)
