@@ -1,0 +1,450 @@
+\section{HSS with Certified Deletion}\label{sec:hss-cd}
+
+Unless otherwise specified, we will consider the following kind of
+HSS schemes by default:
+\begin{itemize}
+\item Those that work for all PPT computable circuits.
+\item Are 2-out-of-2 secret-sharing schemes.
+\item Allow evaluation for a single secret.
+\end{itemize}
+
+An HSS scheme with certified deletion must have the following syntax
+and correctness requirements:
+
+\subsection{HSS-CD Syntax}
+A scheme satisfying the HSS-CD syntax is a tuple of 5 algorithms
+$\HSScd = \HSScd.(\Sh, \Ev, \Del, \Vrfy, \Rec)$ with the following
+properties:
+
+\begin{description}
+
+\item [Syntax:] $ $
+\item $\Sh(s) \rightarrow (\qsh_0^0, \vk_0), (\qsh_1^0,
+\vk_1)$: The sharing algorithm outputs quantum
+(possibly-entangled) secret-shares $\qsh_0^0, \qsh_1^0$ encoding an
+input secret $s$. It also outputs the corresponding classical
+verification keys $\vk_0, \vk_1$.
+
+\item $\Ev(C_j, i, \qsh_i^{j-1}) \rightarrow \qsh_i^{j}$: The
+evaluation algorithm takes the description of a PPT computable
+circuit $C_j$, an index $i \in \bit$, and an input share
+$\qsh_i^{j-1}$. It outputs a possibly-altered output share
+$\qsh_i^{j}$.
+
+\item $\Del(i, \qsh_i^j) \rightarrow \cert_i$: The deletion
+algorithm takes an index $i \in \bit$, a corresponding share
+$\qsh_i^j$, and produces a deletion certificate $\cert_i$.
+
+\item $\Vrfy(i, \vk_i, \cert_i) \rightarrow \top/\bot$: The
+verification algorithm takes an index $i \in \bit$, the
+corresponding verification key $\vk_i$ and a certificate $\cert_i$.
+It outputs $\top$ or $\bot$.
+
+\item $\Rec(\qsh_0^q, \qsh_1^q) \rightarrow (d_1, \cdots, d_q)$: The
+reconstruction algorithm takes two evaluated input shares $\qsh_0^q,
+\qsh_1^q$ and outputs a $q$-tuple $(d_1, \cdots, d_q)$.
+
+\item [Evaluation Correctness:] $\forall$ PPT $C$, the following
+    condition holds for all $q = \poly(\secp)$:
+\begin{align}
+\Pr\left[
+(d_1, \cdots, d_q) = (C_1(s), \cdots, C_q(s))
+\ :
+\begin{array}{ll}
+(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s)\\
+\forall i,j \in \bit \times [q]: \qsh_i^j \leftarrow \Ev(C_j, i,
+\qsh_i^{j-1})\\
+(d_1, \cdots, d_q) \leftarrow \Rec(\qsh_0^q, \qsh_1^q)
+\end{array}
+\right] \geq 1 - \negl(\secp)
+\end{align}
+
+\item [Deletion Correctness:] The following condition holds for
+    all $i \in \bit$ and $q = \poly(\secp)$:
+\begin{align}
+\Pr\left[
+\Vrfy(i, \vk_i, \cert_i) \rightarrow \top
+\ :
+\begin{array}{ll}
+(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s)\\
+\forall j \in [q]: \qsh_i^j \leftarrow \Ev(C_j, i,
+\qsh_i^{j-1})\\
+\cert_i \leftarrow \Del(i, \qsh_i^q)
+\end{array}
+\right] \geq 1 - \negl(\secp)
+\end{align}
+
+\item [Compactness:] The following condition holds for all $i \in
+\bit$ and $q = \poly(\secp)$, where $l_q$ denotes the output length
+of the circuit $C_q$:
+
+\begin{align}
+\left[
+|\qsh_i^q| - |\qsh_i^{q-1}| = \poly(1^\secp, l_q)
+\ :
+\begin{array}{ll}
+(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s)\\
+\forall j \in [q]: \qsh_i^j \leftarrow \Ev(C_j, i,
+\qsh_i^{j-1})\\
+\end{array}
+\right]
+\end{align}
+\end{description}
+
+\subsection{Additive HSS-CD Syntax}
+
+A scheme satisfying the additive HSS-CD syntax is a tuple of 4
+algorithms $\HSScd = \HSScd.(\Sh, \Ev, \Del, \Vrfy)$ with the
+following properties:
+
+\begin{description}
+
+\item [Syntax:] $ $
+\item $\Sh(s) \rightarrow (\qsh_0^0, \vk_0), (\qsh_1^0,
+\vk_1)$: The sharing algorithm outputs quantum
+(possibly-entangled) secret-shares $\qsh_0^0, \qsh_1^0$ encoding an
+input secret $s$. It also outputs the corresponding classical
+verification keys $\vk_0, \vk_1$.
+
+\item $\Ev(C_j, i, (\sh_i^{j-1}, \qsh_i^{j-1})) \rightarrow
+(\sh_i^j, \qsh_i^{j})$: The
+evaluation algorithm takes the description of a PPT computable
+circuit $C_j$, an index $i \in \bit$, a quantum input share
+$\qsh_i^{j-1}$, and a classical input share $\sh_i^{j-1}$ where
+$\sh_i^0 = \bot$. It outputs a quantum output share $\qsh_i^j$ and a
+classical output share $\sh_i^j$.
+
+\item $\Del(i, \qsh_i^j) \rightarrow \cert_i$: The deletion
+algorithm takes an index $i \in \bit$, a corresponding quantum share
+$\qsh_i^j$, and produces a deletion certificate $\cert_i$.
+
+\item $\Vrfy(i, \vk_i, \cert_i) \rightarrow \top/\bot$: The
+verification algorithm takes an index $i \in \bit$, the
+corresponding verification key $\vk_i$ and a certificate $\cert_i$.
+It outputs $\top$ or $\bot$.
+
+\item [Evaluation Correctness:] $\forall$ PPT $C$, the following
+condition holds for all $q = \poly(\secp)$:
+\begin{align}
+\Pr\left[
+\sh_0^q \xor \sh_1^q = C_1(s)\| \cdots \| C_q(s)
+\ :
+\begin{array}{ll}
+(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s)\\
+\forall i,j \in \bit \times [q]: (\sh_i^j, \qsh_i^j)
+\leftarrow \Ev(C_j, i,
+(\sh_i^{j-1}, \qsh_i^{j-1}))\\
+\end{array}
+\right] \geq 1 - \negl(\secp)
+\end{align}
+
+In the case of additive HSS-CD, we will consider the following
+deletion guarantee by default, which is weaker than the standard
+deletion correctness guarantee:
+
+\item [Delete-before-Eval Correctness:] The following condition
+holds for all $i \in \bit$:
+\begin{align}
+\Pr\left[
+\Vrfy(i, \vk_i, \cert_i) \rightarrow \top
+\ :
+\begin{array}{ll}
+(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s)\\
+\cert_i \leftarrow \Del(i, \qsh_i^0)
+\end{array}
+\right] \geq 1 - \negl(\secp)
+\end{align}
+
+
+\item [Deletion Correctness (Optional):] The following condition
+holds for all $i \in \bit$ and $q = \poly(\secp)$:
+\begin{align}
+\Pr\left[
+\Vrfy(i, \vk_i, \cert_i) \rightarrow \top
+\ :
+\begin{array}{ll}
+(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s)\\
+\forall j \in [q]: (\sh_i^j, \qsh_i^j) \leftarrow \Ev(C_j, i,
+(\sh_i^{j-1}, \qsh_i^{j-1}))\\
+\cert_i \leftarrow \Del(i, \qsh_i^q)
+\end{array}
+\right] \geq 1 - \negl(\secp)
+\end{align}
+
+\end{description}
+
+
+
+\subsection{Security Definitions}
+\paragraph{Statistical/Computational Deletion Security wrt Share $j$:}
+The following security notion is defined wrt a non-local quantum
+adversary $(\qA_0, \qA_1)$:
+
+\begin{description}
+\item [$\expa{\HSScd, (\qA_0, \qA_1)}{del}(1^\secp, j, b)$:] $ $
+\begin{enumerate}
+\item $\qA_0$ sends $(s_0, s_1) \in \bit^\secp$ to the challenger.
+\item 
+The challenger runs
+$(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s_b)$ and sends each
+$\qsh_i^0$ to party $P_i$.
+
+\item $\qA_j$ sends $(\cert_j, R_j)$ and $\qA_{1-j}$ sends $R_{1-j}$
+where $R_0, R_1$ are some registers.
+\item If $\Vrfy(j, \vk_j, \cert_j) = \top$, then output $(R_1, R_2)$.
+\end{enumerate}
+
+Statistical Deletion Security wrt Share $j$ holds if the following
+holds:
+
+$$TD\Big(\expa{\HSScd, (\qA_0, \qA_1)}{del}(1^\secp, j,
+0), \expa{\HSScd, (\qA_0, \qA_1)}{del}(1^\secp, j,
+1)\Big) \le \negl(\secp)$$
+
+Computational Deletion Security wrt Share $j$ holds if the following
+holds for all QPT $\qA$:
+
+$$\bigg\lvert \Pr\Big[\qA\Big(\expa{\HSScd, (\qA_0,
+\qA_1)}{del}(1^\secp, j, 0)\Big)=1\Big] -
+\Pr\Big[\qA\Big(\expa{\HSScd, (\qA_0,
+\qA_1)}{del}(1^\secp, j, 1)\Big)=1\Big]
+\bigg\rvert \le \negl(\secp)$$
+
+\end{description}
+
+\paragraph{Statistical/Computational Double-Deletion Security:}
+
+The following security notion is defined wrt a non-local quantum
+adversary $(\qA_0, \qA_1)$:
+
+\begin{description}
+\item [$\expb{\HSScd, (\qA_0, \qA_1)}{del}{2}(1^\secp, b)$:] $ $
+\begin{enumerate}
+\item 
+\item $\qA_0$ sends $(s_0, s_1) \in \bit^\secp$ to the challenger.
+The challenger runs
+$(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s_b)$ and sends each
+$\qsh_i^0$ to party $P_i$.
+
+\item $\qA_0$ sends $(\cert_0, R_0)$ and $\qA_{1}$ sends
+$(\cert_{1}, R_{1})$ where $R_0, R_1$ are some registers.
+\item If $\Vrfy(0, \vk_0, \cert_0) = \Vrfy(1, \vk_1, \cert_1)=
+\top$, then output $(R_0, R_1)$.
+\end{enumerate}
+
+Statistical Double-Deletion Security holds if the following holds:
+
+$$TD\Big(\expb{\HSScd, (\qA_0, \qA_1)}{del}{2}(1^\secp, 
+0), \expb{\HSScd, (\qA_0, \qA_1)}{del}{2}(1^\secp,
+1)\Big) \le \negl(\secp)$$
+
+Computational Double-Deletion Security holds if the following holds
+for all QPT $\qA$:
+
+$$\bigg\lvert \Pr\Big[\qA\Big(\expb{\HSScd, (\qA_0,
+\qA_1)}{del}{2}(1^\secp, 0)\Big)=1\Big] -
+\Pr\Big[\qA\Big(\expb{\HSScd, (\qA_0,
+\qA_1)}{del}{2}(1^\secp, 1)\Big)=1\Big]
+\bigg\rvert \le \negl(\secp)$$
+
+\end{description}
+
+Hereafter, we will use \emph{stat} to denote statistical
+security and \emph{comp} to denote computational security.
+
+\begin{definition}[(Additive) (X, Y)-HSS-CD scheme]
+An (Additive) (X, Y)-HSS-CD scheme for X, Y $\in \{\textrm{stat},
+\textrm{comp}\}^2$  is a scheme that satisfies the (Additive) HSS-CD
+syntax, the X deletion security for share $0$, and the Y deletion
+security for share $1$.
+\end{definition}
+
+\begin{definition}[(Additive) (X)-HSS-CD scheme] An (Additive)
+(X)-HSS-CD scheme for $X \in \{\textrm{stat}, \textrm{comp}\}$ is a
+scheme satisfying the (Additive) HSS-CD syntax and the X
+double-deletion security.
+\end{definition}
+
+\begin{remark}
+Observe that a (stat, comp)-HSS-CD scheme is also a (stat)-HSS-CD
+scheme. Likewise, a (comp, comp)-HSS-CD scheme is also a
+(comp)-HSS-CD scheme.
+\end{remark}
+
+\section{Feasibility Results}
+
+\subsection{FHE-CD based Construction}
+
+We construct a (stat, comp)-HSS-CD scheme
+$\HSScd = \HSScd.(\Sh, \Ev, \Del, \Vrfy, \Rec)$ using the following
+building blocks.
+
+\begin{itemize}
+\item Fully Homomorphic Encryption with Certified Deletion (FHE-CD)
+scheme $\FHEcd = \FHEcd.(\Setup, \qEnc, \qDec, \\
+\Ev, \Del, \Vrfy)$.
+
+\item Secret Sharing with Certified Deletion (SS-CD) scheme $\SScd =
+\SScd.(\Sh, \Rec, \Del, \Vrfy)$.
+\end{itemize}
+
+The construction is as follows.\\ \\
+
+\begin{description}
+
+\item[$\HSScd.\Sh(s)$:] $ $
+\begin{enumerate}
+    \item Generate $(\pk, \sk) \leftarrow \FHEcd.\Setup(1^\secp)$.
+    \item Compute $(\fhecd.\qct^0, \fhecd.\vk) \leftarrow
+        \FHEcd.\qEnc(s)$.
+    \item Compute $(\sscd.\qsh, \sscd.\csh), \sscd.\vk
+    \leftarrow \SScd.\Sh(\sk)$.
+\item Set $\qsh_0^0 \seteq (\fhecd.\pk, \fhecd.\qct^0, \sscd.\csh)$
+and $\vk_0 \seteq \fhecd.\vk$.
+\item Set $\qsh_1^0 \seteq \sscd.\qsh$ and $\vk_1 \seteq \sscd.\vk$.
+\item Output $(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1)$.
+\end{enumerate}
+
+\item[$\HSScd.\Ev(C_j, i, \qsh_i^{j-1})$:] If $i = 1$, set
+$\qsh_1^{j} \seteq \qsh_1^{j-1}$. Else, execute the following:
+\begin{enumerate}
+\item Parse $\qsh_{0}^{j-1}$ as $(\fhecd.\pk, \fhecd.\qct^{j-1},
+\sscd.\csh)$.
+\item Compute $\fhecd.\qct^j \leftarrow \FHEcd.\Ev(\fhecd.\pk, C_j,
+\fhecd.\qct^{j-1})$
+\item Set $\qsh_0^{j} \seteq (\fhecd.\pk, \fhecd.\qct^{j-1}
+\sscd.\csh)$.
+\item Output $\qsh_i^j$.
+\end{enumerate}
+
+\item[$\HSScd.\Del(i, \qsh_i^j)$:] $ $
+\begin{enumerate}
+\item If $i = 0$, execute the following:
+\begin{enumerate}[(i)]
+\item Parse $\qsh_0^j$ as $(\fhecd.\pk, \fhecd.\qct^j, \sscd.\csh)$.
+\item Compute and output $\cert_0 \leftarrow
+\FHEcd.\Del(\fhecd.\qct^j)$.
+\end{enumerate}
+\item If $i = 1$, execute the following:
+\begin{enumerate}[(i)]
+\item Parse $\qsh_1^j$ as $\sscd.\qsh$.
+\item Compute and output $\cert_1 \leftarrow
+\SScd.\Del(\sscd.\qsh)$.
+\end{enumerate}
+\end{enumerate}
+
+\item[$\HSScd.\Vrfy(i, \vk_i, \cert_i)$:] $ $
+
+\begin{enumerate}
+\item If $i = 0$, output $\ans_0 \leftarrow \FHEcd.\Vrfy(\vk_0,
+\cert_0)$.
+\item If $i = 1$, output $\ans_0 \leftarrow \SScd.\Vrfy(\vk_1,
+\cert_1)$.
+\end{enumerate}
+
+\item[$\HSScd.\Rec(\qsh_0^q, \qsh_1^q)$:] $ $
+
+\begin{enumerate}
+\item Parse $\qsh_0^q$ as $(\fhecd.\pk, \fhecd.\qct^q, \sscd.\csh)$.
+\item Parse $\qsh_1^q$ as $\sscd.\qsh$.
+\item Compute $\sk \leftarrow \SScd.\qDec(\sscd.\qsh, \sscd.\csh)$.
+\item Compute and output $(d_1, \ldots, d_q) \leftarrow
+\FHEcd.\qDec(\sk, \fhecd.\qct^q)$.
+
+\end{enumerate}
+
+
+\end{description}
+
+\begin{theorem}
+There exists a (stat, comp)-HSS-CD scheme assuming the existence of
+a fully homomorphic encryption scheme with certified deletion
+(FHE-CD), and a secret-sharing scheme with certified deletion
+(SS-CD).
+\end{theorem}
+
+\begin{proof}
+We will prove that the construction $\HSScd$ is a (stat,
+comp)-HSS-CD scheme. First, we will assume that $(\qA_0, \qA_1)$ is
+a non-local adversary that breaks the statistical deletion
+security of share $0$. We will use this adversary to break the
+certified deletion security of the FHE-CD scheme $\FHEcd$. Consider
+a QPT reduction $\qR$ that runs as follows in the $\FHEcd$ game:
+
+\begin{description}
+\item Execution of $\qR^{(\qA_0, \qA_1)}$ in
+$\expb{\FHEcd,\qR}{fhe}{cd}(1^\secp,b)$:
+\begin{enumerate}
+\item $\qA_0$ sends $(s_0, s_1) \in \bit^\secp$ to $\qR$, which
+$\qR$ forwards to the challenger.
+\item The challenger samples $(\pk, \sk) \leftarrow
+\Setup(1^\secp)$ and sends $\pk$ to $\qR$.
+\item The challenger encrypts $s_b$ as $\qct \leftarrow \qEnc(\pk,
+s_b)$ and sends $\qct$ to $\qR$.
+\item $\qR$ computes $\qsh_0^0 \seteq (\pk, \qct, \sscd.\csh)$,
+where $\sscd.\csh \leftarrow \SScd.\Sim(1^\secp)$.
+\item $\qR$ runs $\qA_0$ on input $\qsh_0^0$. If $\qA_0$ outputs
+($\cert_0$, $R_0$), $\qR$ sends $\cert_0$ to the challenger.
+\item The challenger computes $\ans \leftarrow \Vrfy(\vk, \cert_0)$.
+If $\ans = \top$, it sends $\sk$ to $\qR$. Else, it outputs $\bot$.
+\item $\qR$ computes $\sscd.\qsh$ conditioned on $(\sscd.\qsh,
+\sscd.\sh)$ encoding $\sk$.
+\item $\qR$ sends $\qsh_1^0 \seteq \sscd.\qsh$ to $\qA_1$. If
+$\qA_1$ outputs $R_1$, send $(R_0, R_1)$ to the challenger.
+\end{enumerate}
+\end{description}
+
+We will now argue that if $(\qA_0, \qA_1)$ break statistical
+security wrt share 0, then $\qR$ breaks the certified-deletion
+security of $\FHEcd$. Observe that the view of $\qA_0$ in the
+reduction is identically distributed to its view in $\expa{\HSScd,
+(\qA_0, \qA_1)}{del}(1^\secp, 0, b)$. Now, notice that if
+$\HSScd.\Vrfy(0, \vk_0, \cert_0)$ passes, then $\FHEcd.\Vrfy(\vk,
+\cert_0)$ also passes.  Consequently, $\qR$ receives the secret key
+$\sk$. By the information-theoretic secrecy of the scheme $\SScd$,
+the view of $\qA_1$ is identically distributed to that in the
+original experiment. As a result, $(R_0, R_1)$ are identically
+distributed to that of the $\HSScd$ game. By assumption, there
+exists an unbounded algorithm that can use $(R_0, R_1)$ to guess $b$
+with non-negligible probability. This breaks the certified-deletion
+security of $\FHEcd$.
+
+Next, we will assume that $(\qA_0, \qA_1)$ is a non-local adversary
+that breaks the computational deletion security of share $1$. We
+will use this adversary to break the certified deletion security of
+the SS-CD scheme $\SScd$. Consider a non-local reduction $(\qR_0,
+\qR_1)$ that runs as follows:
+
+\begin{description}
+\item Execution of $(\qR_0^{\qA_0}, \qR_1^{\qA_1})$ in
+$\expb{\SScd,(\qR_0, \qR_1)}{ss}{cd}(1^\secp,b)$:
+\begin{enumerate}
+\item $\qR_0$ samples $(\pk, \sk) \leftarrow
+\FHEcd.\Setup(1^\secp)$. It sets $s_0 \seteq 0^\secp$ and $s_1
+\seteq \sk$ and sends $(s_0, s_1)$ to the challenger.
+\item The challenger computes $(\qsh, \csh, \vk) \leftarrow
+\SScd.\Sh(s_b)$. It sends $\csh$ to $\qR_0$ and $\qsh$ to $\qR_1$.
+
+\end{enumerate}
+\end{description}
+\end{proof}
+
+\subsection{Impossibility Results}
+
+\begin{theorem}
+Any (stat, stat)-HSS-CD scheme is also an information-theoretic HSS
+scheme.
+\end{theorem}
+
+\begin{theorem}
+The classical impossibility of \cite{} extends to the setting of
+quantum secret-shares.
+\end{theorem}
+
+\begin{theorem}
+There does not exist a (comp)-HSS-CD scheme with additive
+reconstruction, given that the algorithm $\Sh$ only outputs shares
+$\qsh_1, \qsh_2$ that are non-entangled.
+\end{theorem}
+
+\cite{C:GorVaiWee12}

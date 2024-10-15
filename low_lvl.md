@@ -1,6 +1,6 @@
-# HSS: Low Level
+# HSS: Low Level (Not-Ordered)
 
-1. [*] Write VBB Construction
-2. [] Write (comp)-CD and (comp+comp)-CD Definitions
-3. [] Prove (comp)-CD Security
+1. [*] Syntax + Defns
+2. [.] CD-FHE-based Construction
+3. [.] (comp)-HSS-CD Impossibility
 

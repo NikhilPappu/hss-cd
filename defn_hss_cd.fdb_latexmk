@@ -1,0 +1,11 @@
+# Fdb version 4
+["pdflatex"] 1728449678 "defn_hss_cd.tex" "defn_hss_cd.pdf" "defn_hss_cd" 1728449678 2
+  "/usr/share/texmf-dist/web2c/texmf.cnf" 1704400182 40684 9b9ec0b4288972636ff6a3b9c4238efc ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1727525247 6768057 63d8662bc2b6d5377b133465dc43bb4d ""
+  "defn_hss_cd.aux" 1728449627 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "defn_hss_cd.tex" 1728449677 362 d4890a95d069226165f6a64e14757a40 ""
+  (generated)
+  "defn_hss_cd.aux"
+  "defn_hss_cd.log"
+  "defn_hss_cd.pdf"
+  (rewritten before read)

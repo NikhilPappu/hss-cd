@@ -8,6 +8,7 @@ Reallocated str_pool (elt_size=1) to 195000 items from 130000.
 Database file #2: bib/crypto.bib
 Database file #3: bib/siamcomp_jacm.bib
 Database file #4: bib/other.bib
+Warning--I didn't find a database entry for ""
 You've used 1 entry,
             2543 wiz_defined-function locations,
             13678 strings with 159771 characters,
@@ -49,3 +50,4 @@ warning$ -- 0
 while$ -- 7
 width$ -- 2
 write$ -- 17
+(There was 1 warning)
