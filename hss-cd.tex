@@ -3,7 +3,6 @@
 Unless otherwise specified, we will consider the following kind of
 HSS schemes by default:
 \begin{itemize}
-\item Those that work for all PPT computable circuits.
 \item Are 2-out-of-2 secret-sharing schemes.
 \item Allow evaluation for a single secret.
 \end{itemize}
@@ -12,9 +11,9 @@ An HSS scheme with certified deletion must have the following syntax
 and correctness requirements:
 
 \subsection{HSS-CD Syntax}
-A scheme satisfying the HSS-CD syntax is a tuple of 5 algorithms
-$\HSScd = \HSScd.(\Sh, \Ev, \Del, \Vrfy, \Rec)$ with the following
-properties:
+A scheme satisfying the HSS-CD syntax for a PPT circuit family
+$\calC$ is a tuple of 5 algorithms $\HSScd = \HSScd.(\Sh, \Ev,$
+$\Del, \Vrfy, \Rec)$ with the following properties:
 
 \begin{description}
 
@@ -44,8 +43,9 @@ It outputs $\top$ or $\bot$.
 reconstruction algorithm takes two evaluated input shares $\qsh_0^q,
 \qsh_1^q$ and outputs a $q$-tuple $(d_1, \cdots, d_q)$.
 
-\item [Evaluation Correctness:] $\forall$ PPT $C$, the following
-    condition holds for all $q = \poly(\secp)$:
+\item [Evaluation Correctness:] $\forall q = \poly(\secp)$
+and $\forall$ $(C_1, \ldots, C_q) \in \mathcal{C}^{q}$, the
+following condition holds:
 \begin{align}
 \Pr\left[
 (d_1, \cdots, d_q) = (C_1(s), \cdots, C_q(s))
@@ -60,7 +60,8 @@ reconstruction algorithm takes two evaluated input shares $\qsh_0^q,
 \end{align}
 
 \item [Deletion Correctness:] The following condition holds for
-    all $i \in \bit$ and $q = \poly(\secp)$:
+all $i \in \bit$, $q = \poly(\secp)$ and $(C_1, \ldots, C_q) \in
+\mathcal{C}^q:$
 \begin{align}
 \Pr\left[
 \Vrfy(i, \vk_i, \cert_i) \rightarrow \top
@@ -75,8 +76,9 @@ reconstruction algorithm takes two evaluated input shares $\qsh_0^q,
 \end{align}
 
 \item [Compactness:] The following condition holds for all $i \in
-\bit$ and $q = \poly(\secp)$, where $l_q$ denotes the output length
-of the circuit $C_q$:
+\bit$, $q = \poly(\secp)$ and $(C_1, \ldots, C_q) \in
+\mathcal{C}^q$, where $l_q$ denotes the output length of the circuit
+$C_q$:
 
 \begin{align}
 \left[
@@ -93,7 +95,8 @@ of the circuit $C_q$:
 
 \subsection{Additive HSS-CD Syntax}
 
-A scheme satisfying the additive HSS-CD syntax is a tuple of 4
+A scheme satisfying the additive HSS-CD syntax for a PPT circuit
+family $\calC$ is a tuple of 4
 algorithms $\HSScd = \HSScd.(\Sh, \Ev, \Del, \Vrfy)$ with the
 following properties:
 
@@ -123,8 +126,9 @@ verification algorithm takes an index $i \in \bit$, the
 corresponding verification key $\vk_i$ and a certificate $\cert_i$.
 It outputs $\top$ or $\bot$.
 
-\item [Evaluation Correctness:] $\forall$ PPT $C$, the following
-condition holds for all $q = \poly(\secp)$:
+\item [Evaluation Correctness:] The following
+condition holds for all $q = \poly(\secp)$ and $(C_1, \ldots, C_q)
+\in \mathcal{C}^q$:
 \begin{align}
 \Pr\left[
 \sh_0^q \xor \sh_1^q = C_1(s)\| \cdots \| C_q(s)
@@ -139,8 +143,7 @@ condition holds for all $q = \poly(\secp)$:
 \end{align}
 
 In the case of additive HSS-CD, we will consider the following
-deletion guarantee by default, which is weaker than the standard
-deletion correctness guarantee:
+weaker deletion guarantee: 
 
 \item [Delete-before-Eval Correctness:] The following condition
 holds for all $i \in \bit$:
@@ -155,7 +158,7 @@ holds for all $i \in \bit$:
 \right] \geq 1 - \negl(\secp)
 \end{align}
 
-
+\begin{comment}
 \item [Deletion Correctness (Optional):] The following condition
 holds for all $i \in \bit$ and $q = \poly(\secp)$:
 \begin{align}
@@ -170,6 +173,7 @@ holds for all $i \in \bit$ and $q = \poly(\secp)$:
 \end{array}
 \right] \geq 1 - \negl(\secp)
 \end{align}
+\end{comment}
 
 \end{description}
 
@@ -252,24 +256,99 @@ $$\bigg\lvert \Pr\Big[\qA\Big(\expb{\HSScd, (\qA_0,
 Hereafter, we will use \emph{stat} to denote statistical
 security and \emph{comp} to denote computational security.
 
-\begin{definition}[(Additive) (X, Y)-HSS-CD scheme]
-An (Additive) (X, Y)-HSS-CD scheme for X, Y $\in \{\textrm{stat},
+\begin{definition}[(Additive) (X, Y)-HSS-CD scheme for $\calC$]
+An (Additive) (X, Y)-HSS-CD scheme for $\calC$, where X, Y $\in
+\{\textrm{stat},
 \textrm{comp}\}^2$  is a scheme that satisfies the (Additive) HSS-CD
-syntax, the X deletion security for share $0$, and the Y deletion
-security for share $1$.
+syntax for $\calC$, the X deletion security for share $0$, and the
+Y deletion security for share $1$.
 \end{definition}
 
 \begin{definition}[(Additive) (X)-HSS-CD scheme] An (Additive)
-(X)-HSS-CD scheme for $X \in \{\textrm{stat}, \textrm{comp}\}$ is a
-scheme satisfying the (Additive) HSS-CD syntax and the X
-double-deletion security.
+(X)-HSS-CD scheme for $\calC$ where $X \in \{\textrm{stat},
+\textrm{comp}\}$ is a scheme satisfying the (Additive) HSS-CD syntax
+for $\calC$ and the X double-deletion security.
 \end{definition}
 
 \begin{remark}
-Observe that a (stat, comp)-HSS-CD scheme is also a (stat)-HSS-CD
-scheme. Likewise, a (comp, comp)-HSS-CD scheme is also a
-(comp)-HSS-CD scheme.
+Observe that a (stat, comp)-HSS-CD scheme for $\calC$ is also
+a (stat)-HSS-CD scheme for $\calC$. Likewise, a (comp,
+comp)-HSS-CD scheme for $\calC$ is also a (comp)-HSS-CD scheme for
+$\calC$.
 \end{remark}
+
+\section{Impossibility Results}
+
+\begin{lemma}
+Any (stat, stat)-HSS-CD scheme for $\cal{C}$ is also an
+information-theoretic HSS scheme for $\calC$.
+\end{lemma}
+\begin{proof}
+Suppose there exists a (stat, stat)-HSS-CD scheme that does not
+satisfy information-theoretic secrecy. Then, there exists an
+unbounded adversary $\qD$ that receives some share $\qsh_i^0$ and
+distinguishes between the secrets $s_0, s_1$. Then, there exists an
+adversary $(\qA_0, \qA_1)$ in the statistical security wrt share
+$1-i$ game that works as follows. $\qA_{1-i}$ honestly deletes its
+share and outputs a dummy register while $\qA_i$ outputs a register
+containing its share $\qsh_i^0$. In the second-stage, the
+distinguisher $\qD$ is run on $\qsh_i^0$ to tell apart the secrets
+$s_0, s_1$.
+\end{proof}
+
+The following theorem shows that the classical impossibility result
+regarding information-theoretic HSS by \cite{ITCS:BGILT18} also
+applies to the setting of quantum shares.
+
+\begin{theorem}
+TBD.
+\end{theorem}
+
+\begin{theorem}
+There does not exist an Additive (comp)-HSS-CD scheme $\HSScd$ for
+any PPT circuit class $\calC$, 
+given that $\HSScd.\Sh(s)$ outputs shares $\qsh_0, \qsh_1$ that are
+not entangled with each other.
+\end{theorem}
+\begin{proof}
+In fact, we will prove that this holds even for a weaker notion of
+evaluation correctness, where $\Ev$ supports only a single
+evaluation. Specifically, for shares $(\qsh_0, \qsh_1)$ output by
+$\Sh(s)$, $\Ev(i, C, \qsh_i)$ outputs $y_i$ such that
+$y_0 \xor y_1 = C(s)$. The argument is as follows:\\
+
+Let $(\ket{\psi_0}, \vk_0), (\ket{\psi_1}, \vk_1)$ be some pure
+state output by $\Sh(s)$, where $\ket{\psi_0}, \ket{\psi_1}$ are not
+entangled with each other. Wlog, let $\{\Pi_0, \mathbb{I} - \Pi_0\}$
+be the projective measurement equivalent of $\Ev(0, C,
+\ket{\psi_0})$, i.e., $\Pi_0$ corresponds to $y_0 = 0$ and
+$\mathbb{I} - \Pi_1$ corresponds to $y_0 = 1$. Let $Y_0$ denote the
+random variable of the output $y_0$. Likewise, consider the
+projective measurement $\{\Pi_1, \mathbb{I} - \Pi_1\}$ equivalent of
+$\Ev(1, C, \ket{\psi_1})$ and let $Y_1$ be the corresponding output
+random variable. Notice that for every outcome $y_0$ of $Y_0$, there
+is a single outcome $y_1$ of $Y_1$ that satisfies $y_1 = C(s) \xor
+y_0$. Let $\widetilde{Y}_0$ be the random variable for
+$\widetilde{y_0}$ sampled as $\widetilde{y_0} = C(s) \xor y_1 : y_1
+\leftarrow Y_1$. By the evaluation correctness requirement, we
+require that $\Pr[Y_0 = \widetilde{Y_0}] \ge 1 - \negl(\secp)$.
+Since $Y_0$ and $\widetilde{Y_0}$ are independent random variables,
+this is only possible if there exists $y_0^\star$ such that $\Pr[Y_0
+= y_0^\star] \geq 1 - \negl(\secp)$ and $\Pr[\widetilde{Y_0} =
+y_0^\star] \geq 1 - \negl(\secp)$. In other words, the measurement
+$\{\Pi_0, \mathbb{I} - \Pi_0\}$ either accepts the state
+$\ket{\psi_0}$ with probability $1 - \negl(\secp)$ or rejects it
+with probability $1 - \negl(\secp)$. Consequently, by the gentle
+measurement lemma, the leftover state is close in trace distance to
+the state $\ket{\psi_0}$. As a result, it can be certifiably deleted
+after obtaining $y_0$. By a similar argument, $y_1$ can be obtained
+in the same way. Since this holds for every possible pure state
+output by $\Sh(s)$, it also holds for arbitrary mixed states. As
+a result, the adversary can efficiently compute $y_0 \xor y_1 =
+C(s)$ in the second-stage, breaking the computational
+double-deletion security. Since this security notion is the weakest
+one, this also rules out the other notions.
+\end{proof}
 
 \section{Feasibility Results}
 
@@ -288,7 +367,7 @@ scheme $\FHEcd = \FHEcd.(\Setup, \qEnc, \qDec, \\
 \SScd.(\Sh, \Rec, \Del, \Vrfy)$.
 \end{itemize}
 
-The construction is as follows.\\ \\
+The construction is as follows.
 
 \begin{description}
 
@@ -458,22 +537,8 @@ probability $\frac12 + \nonnegl(\secp)$, breaking the security of
 the scheme $\SScd$. This gives us a contradiction.
 \end{proof}
 
-\subsection{Impossibility Results}
+\subsection{Spooky-Encryption based Construction with Entangled
+Shares}
 
-\begin{theorem}
-Any (stat, stat)-HSS-CD scheme is also an information-theoretic HSS
-scheme.
-\end{theorem}
+\section{HSS and FSS with Weak Certified-Deletion}
 
-\begin{theorem}
-The classical impossibility of \cite{} extends to the setting of
-quantum secret-shares.
-\end{theorem}
-
-\begin{theorem}
-There does not exist a (comp)-HSS-CD scheme with additive
-reconstruction, given that the algorithm $\Sh$ only outputs shares
-$\qsh_1, \qsh_2$ that are non-entangled.
-\end{theorem}
-
-\cite{C:GorVaiWee12}

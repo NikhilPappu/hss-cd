@@ -6,6 +6,8 @@
 \contentsline {subsection}{\numberline {2.3}Security Definitions}{4}{subsection.2.3}%
 \contentsline {paragraph}{Statistical/Computational Deletion Security wrt Share $j$:}{4}{section*.2}%
 \contentsline {paragraph}{Statistical/Computational Double-Deletion Security:}{5}{section*.3}%
-\contentsline {section}{\numberline {3}Feasibility Results}{5}{section.3}%
-\contentsline {subsection}{\numberline {3.1}FHE-CD based Construction}{5}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Impossibility Results}{8}{subsection.3.2}%
+\contentsline {section}{\numberline {3}Impossibility Results}{5}{section.3}%
+\contentsline {section}{\numberline {4}Feasibility Results}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}FHE-CD based Construction}{6}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Spooky-Encryption based Construction with Entangled Shares}{8}{subsection.4.2}%
+\contentsline {section}{\numberline {5}HSS and FSS with Weak Certified-Deletion}{8}{section.5}%

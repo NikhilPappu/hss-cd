@@ -8,40 +8,39 @@ Reallocated str_pool (elt_size=1) to 195000 items from 130000.
 Database file #2: bib/crypto.bib
 Database file #3: bib/siamcomp_jacm.bib
 Database file #4: bib/other.bib
-Warning--I didn't find a database entry for ""
 You've used 1 entry,
             2543 wiz_defined-function locations,
-            13678 strings with 159771 characters,
-and the built_in function-call counts, 674 in all, are:
-= -- 66
-> -- 33
+            13679 strings with 159766 characters,
+and the built_in function-call counts, 757 in all, are:
+= -- 74
+> -- 39
 < -- 2
-+ -- 11
-- -- 11
-* -- 54
-:= -- 108
++ -- 14
+- -- 14
+* -- 60
+:= -- 122
 add.period$ -- 4
 call.type$ -- 1
-change.case$ -- 7
+change.case$ -- 9
 chr.to.int$ -- 1
 cite$ -- 1
-duplicate$ -- 27
-empty$ -- 47
-format.name$ -- 12
-if$ -- 144
+duplicate$ -- 28
+empty$ -- 50
+format.name$ -- 14
+if$ -- 160
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 1
-newline$ -- 8
+newline$ -- 9
 num.names$ -- 5
-pop$ -- 7
+pop$ -- 9
 preamble$ -- 1
-purify$ -- 8
+purify$ -- 10
 quote$ -- 0
-skip$ -- 26
+skip$ -- 27
 stack$ -- 0
-substring$ -- 39
-swap$ -- 13
+substring$ -- 50
+swap$ -- 14
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
@@ -49,5 +48,4 @@ type$ -- 8
 warning$ -- 0
 while$ -- 7
 width$ -- 2
-write$ -- 17
-(There was 1 warning)
+write$ -- 18
