@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Arch Linux) (preloaded format=pdflatex 2024.9.28)  16 OCT 2024 16:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Arch Linux) (preloaded format=pdflatex 2024.9.28)  17 OCT 2024 00:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -820,31 +820,31 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
  [3{/usr/share/texmf-dist/fonts/enc/dvips/tex-gyre/q-ts1.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}]
-Overfull \hbox (34.38818pt too wide) detected at line 143
+Overfull \hbox (39.1036pt too wide) detected at line 146
 []
  []
 
 LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
-(Font)              scaled to size 7.6pt on input line 188.
+(Font)              scaled to size 7.6pt on input line 176.
 LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
-(Font)              scaled to size 6.0pt on input line 188.
+(Font)              scaled to size 6.0pt on input line 176.
 [4]
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/it' will be
-(Font)              scaled to size 10.0pt on input line 256.
+(Font)              scaled to size 10.0pt on input line 244.
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/it' will be
-(Font)              scaled to size 7.6pt on input line 261.
+(Font)              scaled to size 7.6pt on input line 249.
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/it' will be
-(Font)              scaled to size 6.0pt on input line 261.
+(Font)              scaled to size 6.0pt on input line 249.
 
-Underfull \hbox (badness 10000) in paragraph at lines 314--319
+Underfull \hbox (badness 10000) in paragraph at lines 302--310
 
  []
 
-LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 322.
+LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 315.
 (/usr/share/texmf-dist/tex/latex/psnfss/ufplmbb.fd
 File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
 ) [5]
-Overfull \hbox (3.46584pt too wide) in paragraph at lines 362--365
+Overfull \hbox (3.46584pt too wide) in paragraph at lines 355--358
 []\T1/ntxtlf/m/n/10 (-20) Fully Ho-mo-mor-phic En-cryp-tion with Cer-ti-fied Dele-tion (FHE-CD) scheme $[] \OT1/zplm/m/n/10 = []\OT1/ppl/m/n/10 .\OT1/zplm/m/n/10 ([]\OT1/ppl/m/n/10 , [], [], [] 
  []
 
@@ -859,15 +859,15 @@ Package rerunfilecheck Info: File `main.brf' has not changed.
 (rerunfilecheck)             Checksum: 628F563BFAF6D8DFB8CFA14684A6C4ED;46.
  ) 
 Here is how much of TeX's memory you used:
- 20936 strings out of 477985
- 336354 string characters out of 5840058
+ 20935 strings out of 477985
+ 336317 string characters out of 5840058
  1873388 words of memory out of 5000000
- 40489 multiletter control sequences out of 15000+600000
- 631250 words of font info for 215 fonts, out of 8000000 for 9000
+ 40490 multiletter control sequences out of 15000+600000
+ 631164 words of font info for 214 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 95i,15n,93p,1001b,760s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 95i,15n,93p,1001b,674s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/mathpazo/fplmbb.pfb></usr/share/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/share/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmss10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmss8.pfb></usr/share/texmf-dist/fonts/type1/public/tex-gyre/qtmr.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/ztmb.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/ztmr.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/ztmri.pfb>
-Output written on main.pdf (9 pages, 261524 bytes).
+Output written on main.pdf (9 pages, 263751 bytes).
 PDF statistics:
  260 PDF objects out of 1000 (max. 8388607)
  214 compressed objects within 3 object streams

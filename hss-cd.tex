@@ -96,8 +96,8 @@ $C_q$:
 \subsection{Additive HSS-CD Syntax}
 
 A scheme satisfying the additive HSS-CD syntax for a PPT circuit
-family $\calC$ is a tuple of 4
-algorithms $\HSScd = \HSScd.(\Sh, \Ev, \Del, \Vrfy)$ with the
+family $\calC$ is a tuple of 5
+algorithms $\HSScd = \HSScd.(\Sh, \Ev, \Obs, \Del, \Vrfy)$ with the
 following properties:
 
 \begin{description}
@@ -109,13 +109,14 @@ following properties:
 input secret $s$. It also outputs the corresponding classical
 verification keys $\vk_0, \vk_1$.
 
-\item $\Ev(C_j, i, (\sh_i^{j-1}, \qsh_i^{j-1})) \rightarrow
-(\sh_i^j, \qsh_i^{j})$: The
+\item $\Ev(C_j, i, \qsh_i^{j-1}) \rightarrow \qsh_i^{j}$: The
 evaluation algorithm takes the description of a PPT computable
-circuit $C_j$, an index $i \in \bit$, a quantum input share
-$\qsh_i^{j-1}$, and a classical input share $\sh_i^{j-1}$ where
-$\sh_i^0 = \bot$. It outputs a quantum output share $\qsh_i^j$ and a
-classical output share $\sh_i^j$.
+circuit $C_j$, an index $i \in \bit$ and a share
+$\qsh_i^{j-1}$. It outputs a quantum share $\qsh_i^j$.
+
+\item $\Obs(i, \qsh_i^j) \rightarrow (y_0^1, \ldots, y_0^j):$ The
+observation algorithm takes an index $i \in \bit$ and a quantum
+state $\qsh_i^j$ and produces a $j$-tuple of classical shares.
 
 \item $\Del(i, \qsh_i^j) \rightarrow \cert_i$: The deletion
 algorithm takes an index $i \in \bit$, a corresponding quantum share
@@ -131,13 +132,15 @@ condition holds for all $q = \poly(\secp)$ and $(C_1, \ldots, C_q)
 \in \mathcal{C}^q$:
 \begin{align}
 \Pr\left[
-\sh_0^q \xor \sh_1^q = C_1(s)\| \cdots \| C_q(s)
+(y_0^1 \xor y_1^1, \cdots, y_0^q \xor y_1^q) = (C_1(s), \cdots,
+C_q(s))
 \ :
 \begin{array}{ll}
 (\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s)\\
-\forall i,j \in \bit \times [q]: (\sh_i^j, \qsh_i^j)
+\forall i,j \in \bit \times [q]: \qsh_i^j
 \leftarrow \Ev(C_j, i,
-(\sh_i^{j-1}, \qsh_i^{j-1}))\\
+\qsh_i^{j-1})\\
+(y_i^1, \ldots, y_i^q) \leftarrow \Obs(i, \qsh_i^q)
 \end{array}
 \right] \geq 1 - \negl(\secp)
 \end{align}
@@ -145,36 +148,21 @@ condition holds for all $q = \poly(\secp)$ and $(C_1, \ldots, C_q)
 In the case of additive HSS-CD, we will consider the following
 weaker deletion guarantee: 
 
-\item [Delete-before-Eval Correctness:] The following condition
-holds for all $i \in \bit$:
+\item [Deletion Correctness:] The following condition holds for
+all $i \in \bit$, $q = \poly(\secp)$ and $(C_1, \ldots, C_q) \in
+\mathcal{C}^q:$
 \begin{align}
 \Pr\left[
 \Vrfy(i, \vk_i, \cert_i) \rightarrow \top
 \ :
 \begin{array}{ll}
 (\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s)\\
-\cert_i \leftarrow \Del(i, \qsh_i^0)
-\end{array}
-\right] \geq 1 - \negl(\secp)
-\end{align}
-
-\begin{comment}
-\item [Deletion Correctness (Optional):] The following condition
-holds for all $i \in \bit$ and $q = \poly(\secp)$:
-\begin{align}
-\Pr\left[
-\Vrfy(i, \vk_i, \cert_i) \rightarrow \top
-\ :
-\begin{array}{ll}
-(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s)\\
-\forall j \in [q]: (\sh_i^j, \qsh_i^j) \leftarrow \Ev(C_j, i,
-(\sh_i^{j-1}, \qsh_i^{j-1}))\\
+\forall j \in [q]: \qsh_i^j \leftarrow \Ev(C_j, i,
+\qsh_i^{j-1})\\
 \cert_i \leftarrow \Del(i, \qsh_i^q)
 \end{array}
 \right] \geq 1 - \negl(\secp)
 \end{align}
-\end{comment}
-
 \end{description}
 
 
@@ -311,21 +299,27 @@ given that $\HSScd.\Sh(s)$ outputs shares $\qsh_0, \qsh_1$ that are
 not entangled with each other.
 \end{theorem}
 \begin{proof}
-In fact, we will prove that this holds even for a weaker notion of
-evaluation correctness, where $\Ev$ supports only a single
-evaluation. Specifically, for shares $(\qsh_0, \qsh_1)$ output by
-$\Sh(s)$, $\Ev(i, C, \qsh_i)$ outputs $y_i$ such that
-$y_0 \xor y_1 = C(s)$. The argument is as follows:\\
+In fact, we will prove that this holds even for a weaker notions of
+evaluation and deletion correctness, where $\Ev$ and $\Del$ support
+only a single evaluation. Specifically, for shares $(\qsh_0,
+\qsh_1)$ output by $\Sh(s)$, $\Ev(i, C, \qsh_i)$ outputs a share
+$\nqsh_i$, and $\Obs(i, \nqsh_i)$ outputs a value $y_i$ such that
+$y_0 \xor y_1 = C(s)$. Moreover, $\Del(i, \nqsh_i)$ outputs
+$\cert_i$ such that $\Vrfy(i, \vk_i, \cert_i) = \top$. The argument
+proceeds as follows:\\
 
 Let $(\ket{\psi_0}, \vk_0), (\ket{\psi_1}, \vk_1)$ be some pure
 state output by $\Sh(s)$, where $\ket{\psi_0}, \ket{\psi_1}$ are not
-entangled with each other. Wlog, let $\{\Pi_0, \mathbb{I} - \Pi_0\}$
-be the projective measurement equivalent of $\Ev(0, C,
-\ket{\psi_0})$, i.e., $\Pi_0$ corresponds to $y_0 = 0$ and
-$\mathbb{I} - \Pi_1$ corresponds to $y_0 = 1$. Let $Y_0$ denote the
-random variable of the output $y_0$. Likewise, consider the
+entangled with each other. Let $\ket{\widetilde{\psi_i}}$ be the
+state output by $\Eval(i, C, \ket{\psi_i})$.
+Wlog, let $\{\Pi_0, \mathbb{I} - \Pi_0\}$
+be the projective measurement equivalent of $\Obs(0,
+\ket{\widetilde{\psi_0}})$, i.e., $\Pi_0$ corresponds to $y_0 = 0$
+and $\mathbb{I} - \Pi_1$ corresponds to $y_0 = 1$. Let $Y_0$ denote
+the random variable of the output $y_0$. Likewise, consider the
 projective measurement $\{\Pi_1, \mathbb{I} - \Pi_1\}$ equivalent of
-$\Ev(1, C, \ket{\psi_1})$ and let $Y_1$ be the corresponding output
+$\Obs(1, \ket{\widetilde{\psi_1}})$ and let $Y_1$ be the
+corresponding output
 random variable. Notice that for every outcome $y_0$ of $Y_0$, there
 is a single outcome $y_1$ of $Y_1$ that satisfies $y_1 = C(s) \xor
 y_0$. Let $\widetilde{Y}_0$ be the random variable for
@@ -343,12 +337,11 @@ measurement lemma, the leftover state is close in trace distance to
 the state $\ket{\psi_0}$. As a result, it can be certifiably deleted
 after obtaining $y_0$. By a similar argument, $y_1$ can be obtained
 in the same way. Since this holds for every possible pure state
-output by $\Sh(s)$, it also holds for arbitrary mixed states. As
-a result, the adversary can efficiently compute $y_0 \xor y_1 =
-C(s)$ in the second-stage, breaking the computational
-double-deletion security. Since this security notion is the weakest
-one, this also rules out the other notions.
-\end{proof}
+output by $\Sh(s)$, it also holds for arbitrary mixed states. As a
+result, the adversary can efficiently compute $y_0 \xor y_1 = C(s)$
+in the second-stage, breaking the computational double-deletion
+security. Since this security notion is the weakest one, this also
+rules out the other notions.  \end{proof}
 
 \section{Feasibility Results}
 
