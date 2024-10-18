@@ -19,7 +19,7 @@ badd +1 main.tex
 badd +1 defn_hss_cd.tex
 badd +1 macros_basic.tex
 badd +1 macros_adhoc.tex
-badd +1 hss-cd.tex
+badd +644 hss-cd.tex
 badd +1 ../col_res_skl/const-CDSKE-CDec-NM.tex
 badd +21 preamble_usepackages.tex
 badd +418810 bib/crypto.bib
@@ -66,12 +66,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 100 - ((6 * winheight(0) + 18) / 37)
+let s:l = 657 - ((21 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 100
-normal! 043|
+keepjumps 657
+normal! 05|
 tabnext
 edit ../col_res_skl/const-CDSKE-CDec-NM.tex
 argglobal
@@ -138,12 +138,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 49 - ((27 * winheight(0) + 18) / 37)
+let s:l = 36 - ((14 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 49
-normal! 026|
+keepjumps 36
+normal! 043|
 tabnext
 edit low_lvl.md
 argglobal

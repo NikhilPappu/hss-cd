@@ -168,7 +168,7 @@ all $i \in \bit$, $q = \poly(\secp)$ and $(C_1, \ldots, C_q) \in
 
 
 \subsection{Security Definitions}
-\paragraph{Statistical/Computational Deletion Security wrt Share $j$:}
+\paragraph{Deletion Security wrt Share $j$:}
 The following security notion is defined wrt a non-local quantum
 adversary $(\qA_0, \qA_1)$:
 
@@ -179,11 +179,11 @@ adversary $(\qA_0, \qA_1)$:
 \item 
 The challenger runs
 $(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s_b)$ and sends each
-$\qsh_i^0$ to party $P_i$.
+$\qsh_i^0$ to $\qA_i$.
 
 \item $\qA_j$ sends $(\cert_j, R_j)$ and $\qA_{1-j}$ sends $R_{1-j}$
 where $R_0, R_1$ are some registers.
-\item If $\Vrfy(j, \vk_j, \cert_j) = \top$, then output $(R_1, R_2)$.
+\item If $\Vrfy(j, \vk_j, \cert_j) = \top$, then output $(R_0, R_1)$.
 \end{enumerate}
 
 Statistical Deletion Security wrt Share $j$ holds if the following
@@ -204,7 +204,7 @@ $$\bigg\lvert \Pr\Big[\qA\Big(\expa{\HSScd, (\qA_0,
 
 \end{description}
 
-\paragraph{Statistical/Computational Double-Deletion Security:}
+\paragraph{Double-Deletion Security:}
 
 The following security notion is defined wrt a non-local quantum
 adversary $(\qA_0, \qA_1)$:
@@ -212,11 +212,10 @@ adversary $(\qA_0, \qA_1)$:
 \begin{description}
 \item [$\expb{\HSScd, (\qA_0, \qA_1)}{del}{2}(1^\secp, b)$:] $ $
 \begin{enumerate}
-\item 
 \item $\qA_0$ sends $(s_0, s_1) \in \bit^\secp$ to the challenger.
 The challenger runs
 $(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s_b)$ and sends each
-$\qsh_i^0$ to party $P_i$.
+$\qsh_i^0$ to $\qA_i$.
 
 \item $\qA_0$ sends $(\cert_0, R_0)$ and $\qA_{1}$ sends
 $(\cert_{1}, R_{1})$ where $R_0, R_1$ are some registers.
@@ -241,6 +240,28 @@ $$\bigg\lvert \Pr\Big[\qA\Big(\expb{\HSScd, (\qA_0,
 
 \end{description}
 
+\paragraph{Computational Secrecy wrt Share $j$:}
+
+The following security notion is defined wrt a QPT
+adversary $\qA$:
+
+\begin{description}
+\item [$\expa{\HSScd, \qA}{ind}(1^\secp, j, b)$:] $ $
+\begin{enumerate}
+\item $\qA$ sends $(s_0, s_1) \in \bit^\secp$
+to the challenger. The challenger runs $(\qsh_0^0, \vk_0),
+(\qsh_1^0, \vk_1) \leftarrow \Sh(s_b)$ and sends $\qsh_i^0$ to
+$\qA$.
+\item
+$\qA$ sends $b'$ to the challenger. The challenger outputs $b'$.
+\end{enumerate}
+
+$$\bigg\lvert \Pr\Big[\expa{\HSScd, \qA}{ind}(1^\secp, j, 0)=1\Big]
+-
+\Pr\Big[\expa{\HSScd, \qA}{ind}(1^\secp, j, 1)=1\Big]
+\bigg\rvert \le \negl(\secp)$$
+\end{description}
+
 Hereafter, we will use \emph{stat} to denote statistical
 security and \emph{comp} to denote computational security.
 
@@ -252,11 +273,18 @@ syntax for $\calC$, the X deletion security for share $0$, and the
 Y deletion security for share $1$.
 \end{definition}
 
-\begin{definition}[(Additive) (X)-HSS-CD scheme] An (Additive)
-(X)-HSS-CD scheme for $\calC$ where $X \in \{\textrm{stat},
-\textrm{comp}\}$ is a scheme satisfying the (Additive) HSS-CD syntax
-for $\calC$ and the X double-deletion security.
+\begin{definition}[(Additive) (X)-HSS-CD scheme for $\calC$] An
+(Additive) (X)-HSS-CD scheme for $\calC$ where $X \in
+\{\textrm{stat}, \textrm{comp}\}$ is a scheme satisfying the
+(Additive) HSS-CD syntax for $\calC$, the X double-deletion
+security, and computational secrecy wrt share $0$ and share $1$.
 \end{definition}
+
+\begin{remark}
+Notice that Deletion Security wrt Share
+$j$ implies Computational Secrecy wrt Share $1-j$, but the Double
+Deletion security does not imply Computational Secrecy.
+\end{remark}
 
 \begin{remark}
 Observe that a (stat, comp)-HSS-CD scheme for $\calC$ is also
@@ -305,8 +333,10 @@ only a single evaluation. Specifically, for shares $(\qsh_0,
 \qsh_1)$ output by $\Sh(s)$, $\Ev(i, C, \qsh_i)$ outputs a share
 $\nqsh_i$, and $\Obs(i, \nqsh_i)$ outputs a value $y_i$ such that
 $y_0 \xor y_1 = C(s)$. Moreover, $\Del(i, \nqsh_i)$ outputs
-$\cert_i$ such that $\Vrfy(i, \vk_i, \cert_i) = \top$. The argument
-proceeds as follows:\\
+$\cert_i$ such that $\Vrfy(i, \vk_i, \cert_i) = \top$. Furthermore,
+we will not need to rely on computational secrecy of either share,
+but only the computational double deletion security.
+The argument proceeds as follows:\\
 
 Let $(\ket{\psi_0}, \vk_0), (\ket{\psi_1}, \vk_1)$ be some pure
 state output by $\Sh(s)$, where $\ket{\psi_0}, \ket{\psi_1}$ are not
@@ -319,29 +349,29 @@ and $\mathbb{I} - \Pi_1$ corresponds to $y_0 = 1$. Let $Y_0$ denote
 the random variable of the output $y_0$. Likewise, consider the
 projective measurement $\{\Pi_1, \mathbb{I} - \Pi_1\}$ equivalent of
 $\Obs(1, \ket{\widetilde{\psi_1}})$ and let $Y_1$ be the
-corresponding output
-random variable. Notice that for every outcome $y_0$ of $Y_0$, there
-is a single outcome $y_1$ of $Y_1$ that satisfies $y_1 = C(s) \xor
-y_0$. Let $\widetilde{Y}_0$ be the random variable for
-$\widetilde{y_0}$ sampled as $\widetilde{y_0} = C(s) \xor y_1 : y_1
-\leftarrow Y_1$. By the evaluation correctness requirement, we
-require that $\Pr[Y_0 = \widetilde{Y_0}] \ge 1 - \negl(\secp)$.
-Since $Y_0$ and $\widetilde{Y_0}$ are independent random variables,
-this is only possible if there exists $y_0^\star$ such that $\Pr[Y_0
-= y_0^\star] \geq 1 - \negl(\secp)$ and $\Pr[\widetilde{Y_0} =
-y_0^\star] \geq 1 - \negl(\secp)$. In other words, the measurement
-$\{\Pi_0, \mathbb{I} - \Pi_0\}$ either accepts the state
-$\ket{\psi_0}$ with probability $1 - \negl(\secp)$ or rejects it
-with probability $1 - \negl(\secp)$. Consequently, by the gentle
-measurement lemma, the leftover state is close in trace distance to
-the state $\ket{\psi_0}$. As a result, it can be certifiably deleted
-after obtaining $y_0$. By a similar argument, $y_1$ can be obtained
-in the same way. Since this holds for every possible pure state
-output by $\Sh(s)$, it also holds for arbitrary mixed states. As a
-result, the adversary can efficiently compute $y_0 \xor y_1 = C(s)$
-in the second-stage, breaking the computational double-deletion
-security. Since this security notion is the weakest one, this also
-rules out the other notions.  \end{proof}
+corresponding output random variable. Notice that for every outcome
+$y_0$ of $Y_0$, there is a single outcome $y_1$ of $Y_1$ that
+satisfies $y_1 = C(s) \xor y_0$. Let $\widetilde{Y}_0$ be the random
+variable for $\widetilde{y_0}$ sampled as $\widetilde{y_0} = C(s)
+\xor y_1 : y_1 \leftarrow Y_1$. By the evaluation correctness
+requirement, we require that $\Pr[Y_0 = \widetilde{Y_0}] \ge 1 -
+\negl(\secp)$.  Since $Y_0$ and $\widetilde{Y_0}$ are independent
+random variables, this is only possible if there exists $y_0^\star$
+such that $\Pr[Y_0 = y_0^\star] \geq 1 - \negl(\secp)$ and
+$\Pr[\widetilde{Y_0} = y_0^\star] \geq 1 - \negl(\secp)$. In other
+words, the measurement $\{\Pi_0, \mathbb{I} - \Pi_0\}$ either
+accepts the state $\ket{\psi_0}$ with probability $1 - \negl(\secp)$
+or rejects it with probability $1 - \negl(\secp)$. Consequently, by
+the gentle measurement lemma, the leftover state is close in trace
+distance to the state $\ket{\psi_0}$. As a result, it can be
+certifiably deleted after obtaining $y_0$. By a similar argument,
+$y_1$ can be obtained in the same way. Since this holds for every
+possible pure state output by $\Sh(s)$, it also holds for arbitrary
+mixed states. As a result, the adversary can efficiently compute
+$y_0 \xor y_1 = C(s)$ in the second-stage, breaking the
+computational double-deletion security. Since this security notion
+is the weakest one, this also rules out the other notions.
+\end{proof}
 
 \section{Feasibility Results}
 
@@ -533,5 +563,171 @@ the scheme $\SScd$. This gives us a contradiction.
 \subsection{Spooky-Encryption based Construction with Entangled
 Shares}
 
-\section{HSS and FSS with Weak Certified-Deletion}
+\section{Additive HSS with Weak Certified-Deletion}
+
+\subsection{Additive HSS-wCD Syntax}
+
+A scheme satisfying the additive HSS-wCD syntax for a PPT circuit
+family $\calC$ is a tuple of 4 algorithms $\HSSwcd = \HSSwcd.(\Sh,
+\Ev, \Del, \Vrfy)$ with the following properties:
+
+\begin{description}
+
+\item [Syntax:] $ $
+\item $\Sh(s) \rightarrow (\qsh_0^0, \vk_0), (\qsh_1^0,
+\vk_1)$: The sharing algorithm outputs quantum
+(possibly-entangled) secret-shares $\qsh_0^0, \qsh_1^0$ encoding an
+input secret $s$. It also outputs the corresponding classical
+verification keys $\vk_0, \vk_1$.
+
+\item $\Ev(C_j, i, \qsh_i^{j-1}) \rightarrow (y_i^j, \qsh_i^{j})$:
+The
+evaluation algorithm takes the description of a PPT computable
+circuit $C_j$, an index $i \in \bit$ and a share
+$\qsh_i^{j-1}$. It outputs a quantum share $\qsh_i^j$ and a
+classical additive share $y_i^j$.
+
+\item $\Del(i, \qsh_i^j) \rightarrow \cert_i$: The deletion
+algorithm takes an index $i \in \bit$, a corresponding quantum share
+$\qsh_i^j$, and produces a deletion certificate $\cert_i$.
+
+\item $\Vrfy(i, \vk_i, \cert_i) \rightarrow \top/\bot$: The
+verification algorithm takes an index $i \in \bit$, the
+corresponding verification key $\vk_i$ and a certificate $\cert_i$.
+It outputs $\top$ or $\bot$.
+
+\item [Evaluation Correctness:] The following
+condition holds for all $q = \poly(\secp)$ and $(C_1, \ldots, C_q)
+\in \mathcal{C}^q$:
+\begin{align}
+\Pr\left[
+(y_0^1 \xor y_1^1, \cdots, y_0^q \xor y_1^q) = (C_1(s), \cdots,
+C_q(s))
+\ :
+\begin{array}{ll}
+(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s)\\
+\forall i,j \in \bit \times [q]: (y_i^j, \qsh_i^j)
+\leftarrow \Ev(C_j, i,
+\qsh_i^{j-1})
+\end{array}
+\right] \geq 1 - \negl(\secp)
+\end{align}
+
+\item [Deletion Correctness:] The following condition holds for
+all $i \in \bit$, $q = \poly(\secp)$ and $(C_1, \ldots, C_q) \in
+\mathcal{C}^q:$
+\begin{align}
+\Pr\left[
+\Vrfy(i, \vk_i, \cert_i) \rightarrow \top
+\ :
+\begin{array}{ll}
+(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s)\\
+\forall j \in [q]: (y_i^j, \qsh_i^j) \leftarrow \Ev(C_j, i,
+\qsh_i^{j-1})\\
+\cert_i \leftarrow \Del(i, \qsh_i^q)
+\end{array}
+\right] \geq 1 - \negl(\secp)
+\end{align}
+\end{description}
+
+\subsection{Security Definitions}
+
+\paragraph{Deletion Security wrt Share
+$j$, Circuit Class $\calC$, and Distribution $\calD$:}
+The following security notion is defined wrt a non-local quantum
+adversary $(\qA_0, \qA_1)$:
+
+\begin{description}
+\item [$\expb{\HSSwcd, (\qA_0, \qA_1)}{del}{weak}(1^\secp, j, \calC,
+\calD, b)$:] $ $
+\begin{enumerate}
+\item The challenger samples $(s_0, s_1) \leftarrow \calD$ and
+sends $(s_0, s_1)$ to both $\qA_0, \qA_1$.
+\item 
+The challenger runs
+$(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s_b)$ and sends each
+$\qsh_i^0$ to $\qA_i$.
+
+\item $\qA_j$ sends $(\cert_j, R_j)$ and $\qA_{1-j}$ sends $R_{1-j}$
+where $R_0, R_1$ are some registers.
+\item If $\Vrfy(j, \vk_j, \cert_j) = \top$, then output $(R_0,
+R_1)$.
+\end{enumerate}
+
+\textbf{Need to Formalize this:} Let $\calD$ be a distribution such
+that for $(s_0, s_1)$ drawn from $\calD$, any QPT oracle algorithm
+$\qB^{\calC(\cdot)}$ cannot distinguish between $(s_0, s_1)$.
+
+Statistical (\emph{likewise,} Computational) Deletion Security holds
+if the
+following holds for all \emph{hard-given-$\calC$} distributions
+$\calD$ and unbounded (\emph{likewise}, QPT) algorithms $\qA$:
+
+$$\bigg\lvert \Pr\Big[\qA\Big(\expb{\HSSwcd, (\qA_0,
+\qA_1)}{del}{weak}(1^\secp, j, \calC, \calD, 0)\Big)=1\Big] -
+\Pr\Big[\qA\Big(\expb{\HSSwcd, (\qA_0,
+\qA_1)}{del}{weak}(1^\secp, j, \calC, \calD, 1)\Big)=1\Big]
+\bigg\rvert \le \negl(\secp)$$
+\end{description}
+
+\paragraph{Double-Deletion Security wrt Circuit Class $\calC$, and
+Distribution $\calD$:}
+
+The following security notion is defined wrt a non-local quantum
+adversary $(\qA_0, \qA_1)$:
+
+\begin{description}
+\item [$\expc{\HSSwcd, (\qA_0, \qA_1)}{del}{weak}{2}(1^\secp,
+\calC, \calD, b)$:]
+$ $
+\begin{enumerate}
+\item The challenger samples $(s_0, s_1) \leftarrow \calD$ and
+sends $(s_0, s_1)$ to both $\qA_0, \qA_1$.
+\item The challenger runs
+$(\qsh_0^0, \vk_0), (\qsh_1^0, \vk_1) \gets \Sh(s_b)$ and sends each
+$\qsh_i^0$ to $\qA_i$.
+
+\item $\qA_0$ sends $(\cert_0, R_0)$ and $\qA_{1}$ sends
+$(\cert_{1}, R_{1})$ where $R_0, R_1$ are some registers.
+\item If $\Vrfy(0, \vk_0, \cert_0) = \Vrfy(1, \vk_1, \cert_1)=
+\top$, then output $(R_0, R_1)$.
+\end{enumerate}
+
+Statistical (\emph{likewise}, Computational) Double-Deletion
+Security holds
+if the following holds for all \emph{hard-given-$\calC$}
+distributions $\calD$ and unbounded (\emph{likewise}, QPT)
+algorithms $\qA$:
+
+$$\bigg\lvert \Pr\Big[\qA\Big(\expc{\HSSwcd, (\qA_0,
+\qA_1)}{del}{weak}{2}(1^\secp, \calC, \calD, 0)\Big)=1\Big] -
+\Pr\Big[\qA\Big(\expc{\HSSwcd, (\qA_0,
+\qA_1)}{del}{weak}{2}(1^\secp, \calC, \calD, 1)\Big)=1\Big]
+\bigg\rvert \le \negl(\secp)$$
+\end{description}
+
+\paragraph{Computational Secrecy wrt Share $j$:}
+
+The following security notion is defined wrt a QPT
+adversary $\qA$:
+
+\begin{description}
+\item [$\expa{\HSSwcd, \qA}{ind}(1^\secp, j, b)$:] $ $
+\begin{enumerate}
+\item $\qA$ sends $(s_0, s_1) \in \bit^\secp$
+to the challenger. The challenger runs $(\qsh_0^0, \vk_0),
+(\qsh_1^0, \vk_1) \leftarrow \Sh(s_b)$ and sends $\qsh_i^0$ to
+$\qA$.
+\item
+$\qA$ sends $b'$ to the challenger. The challenger outputs $b'$.
+\end{enumerate}
+
+$$\bigg\lvert \Pr\Big[\expa{\HSSwcd, \qA}{ind}(1^\secp, j, 0)=1\Big]
+-
+\Pr\Big[\expa{\HSSwcd, \qA}{ind}(1^\secp, j, 1)=1\Big]
+\bigg\rvert \le \negl(\secp)$$
+\end{description}
+
+
+
 
