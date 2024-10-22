@@ -15,14 +15,16 @@ else
   set shortmess=aoO
 endif
 badd +1 low_lvl.md
-badd +1 main.tex
-badd +1 defn_hss_cd.tex
-badd +1 macros_basic.tex
-badd +1 macros_adhoc.tex
-badd +644 hss-cd.tex
-badd +1 ../col_res_skl/const-CDSKE-CDec-NM.tex
+badd +184 main.tex
+badd +8 defn_hss_cd.tex
+badd +296 macros_basic.tex
+badd +36 macros_adhoc.tex
+badd +709 hss-cd.tex
+badd +1 ~/Desktop/(p)q_crypto/research/col_res_skl/const-CDSKE-CDec-NM.tex
 badd +21 preamble_usepackages.tex
 badd +418810 bib/crypto.bib
+badd +0 motive.md
+badd +0 preliminaries.tex
 argglobal
 %argdel
 $argadd low_lvl.md
@@ -31,9 +33,25 @@ tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
-tabnew +setlocal\ bufhidden=wipe
 tabrewind
-edit main.tex
+edit low_lvl.md
+argglobal
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=2
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 1 - ((0 * winheight(0) + 18) / 37)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 1
+normal! 03|
+tabnext
+edit hss-cd.tex
 argglobal
 balt low_lvl.md
 setlocal fdm=manual
@@ -46,34 +64,14 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 184 - ((17 * winheight(0) + 18) / 37)
+let s:l = 376 - ((18 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 184
+keepjumps 376
 normal! 0
 tabnext
-edit hss-cd.tex
-argglobal
-balt main.tex
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 657 - ((21 * winheight(0) + 18) / 37)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 657
-normal! 05|
-tabnext
-edit ../col_res_skl/const-CDSKE-CDec-NM.tex
+edit preliminaries.tex
 argglobal
 balt hss-cd.tex
 setlocal fdm=manual
@@ -86,28 +84,16 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 204 - ((16 * winheight(0) + 18) / 37)
+let s:l = 16 - ((15 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 204
+keepjumps 16
 normal! 0
 tabnext
-edit macros_basic.tex
-let s:save_splitbelow = &splitbelow
-let s:save_splitright = &splitright
-set splitbelow splitright
-let &splitbelow = s:save_splitbelow
-let &splitright = s:save_splitright
-wincmd t
-let s:save_winminheight = &winminheight
-let s:save_winminwidth = &winminwidth
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
+edit main.tex
 argglobal
-balt defn_hss_cd.tex
+balt hss-cd.tex
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -118,43 +104,62 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 296 - ((12 * winheight(0) + 13) / 26)
+let s:l = 1 - ((0 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 296
-normal! 030|
+keepjumps 1
+normal! 0
 tabnext
-edit macros_adhoc.tex
+edit motive.md
 argglobal
-balt macros_basic.tex
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 36 - ((14 * winheight(0) + 18) / 37)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 36
-normal! 043|
-tabnext
-edit low_lvl.md
-argglobal
+balt low_lvl.md
 setlocal fdm=expr
 setlocal fde=Foldexpr_markdown(v:lnum)
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=1
+setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
+2
+normal! zo
+4
+normal! zo
+6
+normal! zo
+17
+normal! zo
+27
+normal! zo
+29
+normal! zo
+34
+normal! zo
+42
+normal! zo
+44
+normal! zo
+49
+normal! zo
+54
+normal! zo
+56
+normal! zo
+72
+normal! zo
+78
+normal! zo
+80
+normal! zo
+109
+normal! zo
+118
+normal! zo
+121
+normal! zo
+135
+normal! zo
 let s:l = 1 - ((0 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
@@ -169,8 +174,6 @@ endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20
 let &shortmess = s:shortmess_save
-let &winminheight = s:save_winminheight
-let &winminwidth = s:save_winminwidth
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)

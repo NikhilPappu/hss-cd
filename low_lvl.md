@@ -1,6 +1,5 @@
-# HSS: Low Level (Not-Ordered)
+# HSS: Low Level
 
-1. [*] Syntax + Defns
-2. [.] CD-FHE-based Construction
-3. [.] (comp)-HSS-CD Impossibility
+1. [x] HSS-CD Motivating Example
+2. [*] HSS-CD Feasibility
 

@@ -93,12 +93,11 @@ $C_q$:
 \end{align}
 \end{description}
 
-\subsection{Additive HSS-CD Syntax}
+\subsection{Additive Strong HSS-CD Syntax}
 
-A scheme satisfying the additive HSS-CD syntax for a PPT circuit
-family $\calC$ is a tuple of 5
-algorithms $\HSScd = \HSScd.(\Sh, \Ev, \Obs, \Del, \Vrfy)$ with the
-following properties:
+A scheme satisfying the additive strong HSS-CD syntax for a PPT
+circuit family $\calC$ is a tuple of 5 algorithms $\HSScd =
+\HSScd.(\Sh, \Ev, \Obs, \Del, \Vrfy)$ with the following properties:
 
 \begin{description}
 
@@ -145,8 +144,8 @@ C_q(s))
 \right] \geq 1 - \negl(\secp)
 \end{align}
 
-In the case of additive HSS-CD, we will consider the following
-weaker deletion guarantee: 
+In the case of additive strong HSS-CD, we will consider the
+following weaker deletion guarantee: 
 
 \item [Deletion Correctness:] The following condition holds for
 all $i \in \bit$, $q = \poly(\secp)$ and $(C_1, \ldots, C_q) \in
@@ -265,18 +264,21 @@ $$\bigg\lvert \Pr\Big[\expa{\HSScd, \qA}{ind}(1^\secp, j, 0)=1\Big]
 Hereafter, we will use \emph{stat} to denote statistical
 security and \emph{comp} to denote computational security.
 
-\begin{definition}[(Additive) (X, Y)-HSS-CD scheme for $\calC$]
-An (Additive) (X, Y)-HSS-CD scheme for $\calC$, where X, Y $\in
+\begin{definition}[(Additive Strong) (X, Y)-HSS-CD scheme for
+$\calC$]
+An (Additive Strong) (X, Y)-HSS-CD scheme for $\calC$, where X, Y
+$\in
 \{\textrm{stat},
-\textrm{comp}\}^2$  is a scheme that satisfies the (Additive) HSS-CD
+\textrm{comp}\}^2$  is a scheme that satisfies the (Additive Strong)
+HSS-CD
 syntax for $\calC$, the X deletion security for share $0$, and the
 Y deletion security for share $1$.
 \end{definition}
 
-\begin{definition}[(Additive) (X)-HSS-CD scheme for $\calC$] An
-(Additive) (X)-HSS-CD scheme for $\calC$ where $X \in
+\begin{definition}[(Additive Strong) (X)-HSS-CD scheme for $\calC$] An
+(Additive Strong) (X)-HSS-CD scheme for $\calC$ where $X \in
 \{\textrm{stat}, \textrm{comp}\}$ is a scheme satisfying the
-(Additive) HSS-CD syntax for $\calC$, the X double-deletion
+(Additive Strong) HSS-CD syntax for $\calC$, the X double-deletion
 security, and computational secrecy wrt share $0$ and share $1$.
 \end{definition}
 
@@ -293,7 +295,7 @@ comp)-HSS-CD scheme for $\calC$ is also a (comp)-HSS-CD scheme for
 $\calC$.
 \end{remark}
 
-\section{Impossibility Results}
+\section{Feasibility and Impossibility}
 
 \begin{lemma}
 Any (stat, stat)-HSS-CD scheme for $\cal{C}$ is also an
@@ -321,7 +323,8 @@ TBD.
 \end{theorem}
 
 \begin{theorem}
-There does not exist an Additive (comp)-HSS-CD scheme $\HSScd$ for
+There does not exist an Additive Strong (comp)-HSS-CD scheme
+$\HSScd$ for
 any PPT circuit class $\calC$, 
 given that $\HSScd.\Sh(s)$ outputs shares $\qsh_0, \qsh_1$ that are
 not entangled with each other.
@@ -372,8 +375,6 @@ $y_0 \xor y_1 = C(s)$ in the second-stage, breaking the
 computational double-deletion security. Since this security notion
 is the weakest one, this also rules out the other notions.
 \end{proof}
-
-\section{Feasibility Results}
 
 \subsection{FHE-CD based Construction}
 
@@ -560,15 +561,38 @@ probability $\frac12 + \nonnegl(\secp)$, breaking the security of
 the scheme $\SScd$. This gives us a contradiction.
 \end{proof}
 
-\subsection{Spooky-Encryption based Construction with Entangled
-Shares}
+\section{Additive HSS with Certified-Deletion}
 
-\section{Additive HSS with Weak Certified-Deletion}
+\subsection{Motivation}
 
-\subsection{Additive HSS-wCD Syntax}
+\begin{enumerate}
+\item Distributed Storage (and ability to evaluate). No single point
+of attack.
+\item Can obtain evaluated outputs and also deletion guarantee
+without choosing between two. This is achieved with classical
+deletion certificate as well, w/o needing quantum revocation.
+\item Additive shares are Optimally Compact unlike FHE ciphertexts
+    (for instance). This ensures smaller communication overhead.
+\item Reconstruction computation overhead is minimal. Meaningful if
+    have to perform many of them.
+\item Most importantly, additive shares are linearly homomorphic.
+    This allows computation over shares of multiple parties. For
+    instance, two hospitals may secret share patient data between
+    two servers. The servers can compute ($C_O, C_B, C_A)$)
+    functions say, where each one returns number of instances of
+    that blood group. The shares can simply be added after
+    evaluation and single share can be sent back (both hospitals
+    learn total number of patients of each kind between both of
+    them). This is especially nice since input shares cannot be
+    evaluated on together because they are in CD form (we don't know
+    how to do multi-key FHE-CD). Another thing to note is that CD
+    shares do not have any linear homomorphism also.
+\end{enumerate}
 
-A scheme satisfying the additive HSS-wCD syntax for a PPT circuit
-family $\calC$ is a tuple of 4 algorithms $\HSSwcd = \HSSwcd.(\Sh,
+\subsection{Additive HSS-CD Syntax}
+
+A scheme satisfying the additive HSS-CD syntax for a PPT circuit
+family $\calC$ is a tuple of 4 algorithms $\HSScd = \HSScd.(\Sh,
 \Ev, \Del, \Vrfy)$ with the following properties:
 
 \begin{description}
@@ -638,7 +662,7 @@ The following security notion is defined wrt a non-local quantum
 adversary $(\qA_0, \qA_1)$:
 
 \begin{description}
-\item [$\expb{\HSSwcd, (\qA_0, \qA_1)}{del}{weak}(1^\secp, j, \calC,
+\item [$\expa{\HSSwcd, (\qA_0, \qA_1)}{del}(1^\secp, j, \calC,
 \calD, b)$:] $ $
 \begin{enumerate}
 \item The challenger samples $(s_0, s_1) \leftarrow \calD$ and
@@ -663,10 +687,10 @@ if the
 following holds for all \emph{hard-given-$\calC$} distributions
 $\calD$ and unbounded (\emph{likewise}, QPT) algorithms $\qA$:
 
-$$\bigg\lvert \Pr\Big[\qA\Big(\expb{\HSSwcd, (\qA_0,
-\qA_1)}{del}{weak}(1^\secp, j, \calC, \calD, 0)\Big)=1\Big] -
-\Pr\Big[\qA\Big(\expb{\HSSwcd, (\qA_0,
-\qA_1)}{del}{weak}(1^\secp, j, \calC, \calD, 1)\Big)=1\Big]
+$$\bigg\lvert \Pr\Big[\qA\Big(\expa{\HSSwcd, (\qA_0,
+\qA_1)}{del}(1^\secp, j, \calC, \calD, 0)\Big)=1\Big] -
+\Pr\Big[\qA\Big(\expa{\HSSwcd, (\qA_0,
+\qA_1)}{del}(1^\secp, j, \calC, \calD, 1)\Big)=1\Big]
 \bigg\rvert \le \negl(\secp)$$
 \end{description}
 
@@ -677,7 +701,7 @@ The following security notion is defined wrt a non-local quantum
 adversary $(\qA_0, \qA_1)$:
 
 \begin{description}
-\item [$\expc{\HSSwcd, (\qA_0, \qA_1)}{del}{weak}{2}(1^\secp,
+\item [$\expb{\HSSwcd, (\qA_0, \qA_1)}{del}{2}(1^\secp,
 \calC, \calD, b)$:]
 $ $
 \begin{enumerate}
@@ -699,10 +723,10 @@ if the following holds for all \emph{hard-given-$\calC$}
 distributions $\calD$ and unbounded (\emph{likewise}, QPT)
 algorithms $\qA$:
 
-$$\bigg\lvert \Pr\Big[\qA\Big(\expc{\HSSwcd, (\qA_0,
-\qA_1)}{del}{weak}{2}(1^\secp, \calC, \calD, 0)\Big)=1\Big] -
-\Pr\Big[\qA\Big(\expc{\HSSwcd, (\qA_0,
-\qA_1)}{del}{weak}{2}(1^\secp, \calC, \calD, 1)\Big)=1\Big]
+$$\bigg\lvert \Pr\Big[\qA\Big(\expb{\HSSwcd, (\qA_0,
+\qA_1)}{del}{2}(1^\secp, \calC, \calD, 0)\Big)=1\Big] -
+\Pr\Big[\qA\Big(\expb{\HSSwcd, (\qA_0,
+\qA_1)}{del}{2}(1^\secp, \calC, \calD, 1)\Big)=1\Big]
 \bigg\rvert \le \negl(\secp)$$
 \end{description}
 
