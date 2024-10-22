@@ -64,12 +64,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 376 - ((18 * winheight(0) + 18) / 37)
+let s:l = 574 - ((26 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 376
-normal! 0
+keepjumps 574
+normal! 014|
 tabnext
 edit preliminaries.tex
 argglobal

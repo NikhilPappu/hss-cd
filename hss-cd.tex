@@ -568,6 +568,21 @@ the scheme $\SScd$. This gives us a contradiction.
 \begin{enumerate}
 \item Distributed Storage (and ability to evaluate). No single point
 of attack.
+\item May take advantage of distributed evaluation, both in terms of
+computation load, and in terms of assumptions. For example, to allow
+a single party to learn $f(s)$ but not $s$, we could give it a
+functional encryption ciphertext and access to function keys (even
+that is not super clear). But in classical HSS, using Spooky Enc can
+distributed evaluate any function without a single party even
+learning $f(s)$, much less $s$. Even though in our CD variant, we
+allow parties to come together later, allowing them to obtain $f(s)$
+as in the above single party case, it is not the same because
+parties are required to delete individual pieces before coming
+together.
+
+\item Offers two levels of security. Additive sharing of output is
+      one, but certified deletion of sensitive information is
+      another.
 \item Can obtain evaluated outputs and also deletion guarantee
 without choosing between two. This is achieved with classical
 deletion certificate as well, w/o needing quantum revocation.

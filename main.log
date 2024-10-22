@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Arch Linux) (preloaded format=pdflatex 2024.9.28)  21 OCT 2024 18:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Arch Linux) (preloaded format=pdflatex 2024.9.28)  22 OCT 2024 01:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -849,12 +849,12 @@ Overfull \hbox (3.46584pt too wide) in paragraph at lines 386--389
  []
 
 [6] [7] [8]
-Overfull \hbox (58.50873pt too wide) detected at line 638
+Overfull \hbox (58.50873pt too wide) detected at line 653
 []
  []
 
 [9]
-Overfull \hbox (19.04585pt too wide) detected at line 694
+Overfull \hbox (19.04585pt too wide) detected at line 709
 [] [] []\OT1/pzc/m/it/10 A[][][]\OT1/zplm/m/n/10 (\OT1/ppl/m/n/10 1[], \OML/zplm/m/it/10 j\OT1/ppl/m/n/10 , \OMS/zplm/m/n/10 C\OT1/ppl/m/n/10 , \OMS/zplm/m/n/10 D\OT1/ppl/m/n/10 , 0\OT1/zplm/m/n/10 )[] = \OT1/ppl/m/n/10 1[] \OMS/zplm/m/n/10 ^^@ [] []\OT1/pzc/m/it/10 A[][][]\OT1/zplm/m/n/10 (\OT1/ppl/m/n/10 1[], \OML/zplm/m/it/10 j\OT1/ppl/m/n/10 , \OMS/zplm/m/n/10 C\OT1/ppl/m/n/10 , \OMS/zplm/m/n/10 D\OT1/ppl/m/n/10 , 1\OT1/zplm/m/n/10 )[] = \OT1/ppl/m/n/10 1[][] \OMS/zplm/m/n/10 ^^T []\OT1/zplm/m/n/10 (\OML/zplm/m/it/10 ^^U\OT1/zplm/m/n/10 )
  []
 
@@ -869,18 +869,18 @@ Package rerunfilecheck Info: File `main.brf' has not changed.
 (rerunfilecheck)             Checksum: 98C4F43FA394C6D84E99D880B2752283;46.
  ) 
 Here is how much of TeX's memory you used:
- 20985 strings out of 477985
- 337010 string characters out of 5840058
+ 20993 strings out of 477985
+ 337148 string characters out of 5840058
  1874388 words of memory out of 5000000
  40492 multiletter control sequences out of 15000+600000
- 632217 words of font info for 226 fonts, out of 8000000 for 9000
+ 632475 words of font info for 229 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  95i,15n,93p,1001b,736s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/mathpazo/fplmbb.pfb></usr/share/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/share/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmss10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmss8.pfb></usr/share/texmf-dist/fonts/type1/public/tex-gyre/qtmr.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/ztmb.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/ztmr.pfb></usr/share/texmf-dist/fonts/type1/public/newtx/ztmri.pfb>
-Output written on main.pdf (11 pages, 276107 bytes).
+Output written on main.pdf (11 pages, 276877 bytes).
 PDF statistics:
- 298 PDF objects out of 1000 (max. 8388607)
- 250 compressed objects within 3 object streams
- 102 named destinations out of 1000 (max. 500000)
+ 301 PDF objects out of 1000 (max. 8388607)
+ 253 compressed objects within 3 object streams
+ 104 named destinations out of 1000 (max. 500000)
  50777 words of extra memory for PDF output out of 51595 (max. 10000000)
 
