@@ -14,17 +14,36 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 low_lvl.md
-badd +184 main.tex
+badd +4 low_lvl.md
+badd +185 main.tex
 badd +8 defn_hss_cd.tex
 badd +296 macros_basic.tex
-badd +36 macros_adhoc.tex
-badd +709 hss-cd.tex
+badd +31 macros_adhoc.tex
+badd +242 hss-cd.tex
 badd +1 ~/Desktop/(p)q_crypto/research/col_res_skl/const-CDSKE-CDec-NM.tex
 badd +21 preamble_usepackages.tex
-badd +418810 bib/crypto.bib
-badd +0 motive.md
-badd +0 preliminaries.tex
+badd +19032 bib/crypto.bib
+badd +1 motive.md
+badd +15 preliminaries.tex
+badd +1 read_group.md
+badd +7 fss-cd.tex
+badd +1 strong-fss.tex
+badd +1 std-fss.tex
+badd +1 dbo-fss.tex
+badd +1 strong-fss-cd.tex
+badd +1 std-fss-cd.tex
+badd +1 dbo-fss-cd.tex
+badd +3 full-fss-cd.tex
+badd +12 fd-fss.tex
+badd +1 r-fss.tex
+badd +1 sl-fss.tex
+badd +1 dsl.tex
+badd +1 dcp.tex
+badd +99 motive.tex
+badd +2 stash.md
+badd +217 bib/other.bib
+badd +1 intro.tex
+badd +1 todo.tex
 argglobal
 %argdel
 $argadd low_lvl.md
@@ -34,26 +53,9 @@ tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
 tabrewind
-edit low_lvl.md
+edit dsl.tex
 argglobal
-setlocal fdm=expr
-setlocal fde=Foldexpr_markdown(v:lnum)
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=2
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-let s:l = 1 - ((0 * winheight(0) + 18) / 37)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 1
-normal! 03|
-tabnext
-edit hss-cd.tex
-argglobal
-balt low_lvl.md
+balt fss-cd.tex
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -64,56 +66,36 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 574 - ((26 * winheight(0) + 18) / 37)
+let s:l = 1 - ((0 * winheight(0) + 18) / 36)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 574
+keepjumps 1
+normal! 0
+tabnext
+edit todo.tex
+argglobal
+balt main.tex
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 1 - ((0 * winheight(0) + 18) / 36)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 1
 normal! 014|
 tabnext
-edit preliminaries.tex
+edit stash.md
 argglobal
-balt hss-cd.tex
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 16 - ((15 * winheight(0) + 18) / 37)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 16
-normal! 0
-tabnext
-edit main.tex
-argglobal
-balt hss-cd.tex
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 18) / 37)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 1
-normal! 0
-tabnext
-edit motive.md
-argglobal
-balt low_lvl.md
+balt dsl.tex
 setlocal fdm=expr
 setlocal fde=Foldexpr_markdown(v:lnum)
 setlocal fmr={{{,}}}
@@ -122,51 +104,59 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-2
+137
 normal! zo
-4
+137
 normal! zo
-6
+157
 normal! zo
-17
-normal! zo
-27
-normal! zo
-29
-normal! zo
-34
-normal! zo
-42
-normal! zo
-44
-normal! zo
-49
-normal! zo
-54
-normal! zo
-56
-normal! zo
-72
-normal! zo
-78
-normal! zo
-80
-normal! zo
-109
-normal! zo
-118
-normal! zo
-121
-normal! zo
-135
-normal! zo
-let s:l = 1 - ((0 * winheight(0) + 18) / 37)
+let s:l = 223 - ((19 * winheight(0) + 18) / 36)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 03|
-tabnext 2
+keepjumps 223
+normal! 0
+tabnext
+edit macros_adhoc.tex
+argglobal
+balt dsl.tex
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 55 - ((18 * winheight(0) + 18) / 36)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 55
+normal! 027|
+tabnext
+edit macros_basic.tex
+argglobal
+balt macros_adhoc.tex
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 681 - ((28 * winheight(0) + 18) / 36)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 681
+normal! 022|
+tabnext 1
 set stal=1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf

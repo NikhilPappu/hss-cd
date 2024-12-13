@@ -1,6 +1,8 @@
-# HSS: Low Level
+# DSL: Low Level
 
-1. [] Strong HSS-CD Motivating Example
-2. [] Weak HSS-CD Feasibility
-3. [] Strong HSS-CD Entangled Feasibility
+## D-OTP
+
+1. [*] Identify Correctness and DP Properties of Quantum State
+2. [] Reduce to DP Hardness using collapsing of RO
+3. [] Prove Non-Entangled Impossibility
 

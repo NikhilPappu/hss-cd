@@ -10,37 +10,37 @@ Database file #3: bib/siamcomp_jacm.bib
 Database file #4: bib/other.bib
 You've used 1 entry,
             2543 wiz_defined-function locations,
-            13679 strings with 159766 characters,
-and the built_in function-call counts, 757 in all, are:
-= -- 74
-> -- 39
+            13679 strings with 159708 characters,
+and the built_in function-call counts, 634 in all, are:
+= -- 63
+> -- 27
 < -- 2
-+ -- 14
-- -- 14
-* -- 60
-:= -- 122
++ -- 8
+- -- 8
+* -- 48
+:= -- 100
 add.period$ -- 4
 call.type$ -- 1
-change.case$ -- 9
+change.case$ -- 6
 chr.to.int$ -- 1
 cite$ -- 1
-duplicate$ -- 28
-empty$ -- 50
-format.name$ -- 14
-if$ -- 160
+duplicate$ -- 27
+empty$ -- 47
+format.name$ -- 9
+if$ -- 138
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 1
-newline$ -- 9
+newline$ -- 8
 num.names$ -- 5
-pop$ -- 9
+pop$ -- 6
 preamble$ -- 1
-purify$ -- 10
+purify$ -- 7
 quote$ -- 0
 skip$ -- 27
 stack$ -- 0
-substring$ -- 50
-swap$ -- 14
+substring$ -- 39
+swap$ -- 13
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
@@ -48,4 +48,4 @@ type$ -- 8
 warning$ -- 0
 while$ -- 7
 width$ -- 2
-write$ -- 18
+write$ -- 17

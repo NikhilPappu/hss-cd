@@ -1,0 +1,15 @@
+# Fdb version 4
+["pdflatex"] 1732308513 "hss-cd.tex" "hss-cd.pdf" "hss-cd" 1732308514 2
+  "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1704400182 3524 cb3e574dea2d1052e39280babc910dc8 ""
+  "/usr/share/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1704400182 1328 c834bbb027764024c09d3d2bf908b5f0 ""
+  "/usr/share/texmf-dist/fonts/tfm/public/cm/cmti10.tfm" 1704400182 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
+  "/usr/share/texmf-dist/web2c/texmf.cnf" 1704400182 40684 9b9ec0b4288972636ff6a3b9c4238efc ""
+  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1727503145 4488431 400e83998f294bd33f67a4e387d0a067 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1727525247 6768057 63d8662bc2b6d5377b133465dc43bb4d ""
+  "hss-cd.aux" 1732308513 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "hss-cd.tex" 1731391011 28741 bc5649fe3320397893a32e847989a118 ""
+  (generated)
+  "hss-cd.aux"
+  "hss-cd.log"
+  "hss-cd.pdf"
+  (rewritten before read)

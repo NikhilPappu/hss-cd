@@ -1,18 +1,14 @@
 \providecommand \autonum@processReference [2]{}
-\contentsline {section}{\numberline {1}Preliminaries}{3}{section.1}%
-\contentsline {section}{\numberline {2}HSS with Certified Deletion}{3}{section.2}%
-\contentsline {subsection}{\numberline {2.1}HSS-CD Syntax}{3}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Additive Strong HSS-CD Syntax}{4}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Security Definitions}{4}{subsection.2.3}%
-\contentsline {paragraph}{Deletion Security wrt Share $j$:}{4}{section*.2}%
-\contentsline {paragraph}{Double-Deletion Security:}{5}{section*.3}%
-\contentsline {paragraph}{Computational Secrecy wrt Share $j$:}{5}{section*.4}%
-\contentsline {section}{\numberline {3}Feasibility and Impossibility}{6}{section.3}%
-\contentsline {subsection}{\numberline {3.1}FHE-CD based Construction}{6}{subsection.3.1}%
-\contentsline {section}{\numberline {4}Additive HSS with Certified-Deletion}{8}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Motivation}{8}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Additive HSS-CD Syntax}{9}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Security Definitions}{10}{subsection.4.3}%
-\contentsline {paragraph}{Deletion Security wrt Share $j$, Circuit Class $\mathcal {C}$, and Distribution $\mathcal {D}$:}{10}{section*.5}%
-\contentsline {paragraph}{Double-Deletion Security wrt Circuit Class $\mathcal {C}$, and Distribution $\mathcal {D}$:}{10}{section*.6}%
-\contentsline {paragraph}{Computational Secrecy wrt Share $j$:}{10}{section*.7}%
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Motivation}{3}{subsection.1.1}%
+\contentsline {paragraph}{Use Case.}{3}{section*.2}%
+\contentsline {section}{\numberline {2}To Do}{4}{section.2}%
+\contentsline {section}{\numberline {3}Definitions of Distributed Software Leasing}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Syntax of DSL}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Security Definitions}{5}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Inapplicability of SSL Impossibility}{5}{section.4}%
+\contentsline {section}{\numberline {5}DSL for Puncturable Functions}{6}{section.5}%
+\contentsline {section}{\numberline {6}Distributed One-Time Programs}{6}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Definition}{7}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Local One-Time Authentication}{8}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Construction in the Oracle Model}{8}{subsection.6.3}%

@@ -1,0 +1,498 @@
+\section{Definitions of Distributed Software Leasing}\label{sec:dsl}
+
+\subsection{Syntax of DSL}
+
+A scheme satisfying the DSL syntax for a PPT computable circuit
+class $\qC$ is a tuple of 4 algorithms $\DSL = \DSL.(\Sh, \Ev, \Del,
+\Vrfy)$ with the following properties:
+
+\begin{description}
+
+\item [Syntax:] $ $
+\item $\Sh(P) \rightarrow (\qP_0, \vk_0), (\qP_1,
+\vk_1)$: The sharing algorithm outputs quantum
+program-shares $\qP_0, \qP_1$ encoding an input program $P \in \qC$.
+It also outputs the corresponding classical verification keys
+$\vk_0, \vk_1$.
+
+\item $\Ev(i, \qP_i, x) \rightarrow y_i$:
+The evaluation algorithm takes an index $i \in \bit$, a quantum
+program-share $\qP_i$, and a classical input $x$. It
+outputs a classical evaluation-share $y_i$.
+
+\item $\Del(i, \qP_i) \rightarrow \cert_i$: The deletion
+algorithm takes an index $i \in \bit$, a corresponding program-share
+$\qP_i$, and produces a deletion certificate $\cert_i$.
+
+\item $\Vrfy(i, \vk_i, \cert_i) \rightarrow \top/\bot$: The 
+classical verification algorithm takes an index $i \in \bit$, the
+corresponding verification key $\vk_i$ and a certificate $\cert_i$.
+It outputs $\top$ or $\bot$.
+
+\item [Deletion Correctness:] The following condition holds for each
+index $i \in \bit$:
+\begin{align}
+\Pr\left[
+\Vrfy(i, \vk_i, \cert_i) \rightarrow \top
+\ :
+\begin{array}{ll}
+(\qP_0, \vk_0), (\qP_1, \vk_1) \gets \Sh(P)\\
+\cert_i \leftarrow \Del(i, \qP_i)
+\end{array}
+\right] \geq 1 - \negl(\secp)
+\end{align}
+
+\item [Evaluation Correctness:] The following holds for every input
+$x$ in the domain of $P$:
+
+\begin{align}
+\Pr\left[
+y_0 \xor y_1 = P(x)
+\ :
+\begin{array}{ll}
+(\qP_0, \vk_0), (\qP_1, \vk_1) \gets \Sh(P)\\
+y_i \leftarrow \Ev(i, \qP_i, x)
+\end{array}
+\right] \geq 1 - \negl(\secp)
+\end{align}
+\end{description}
+
+\begin{remark}
+Notice that a correct $y_i$ can be obtained from $\qP_i$ with
+overwhelming probability. Hence, from the gentle measurement lemma,
+such a $y_i$ can be obtained without almost disturbing the state.
+This implies that an arbitrary polynomial number of evaluations can
+be performed using $\qP_i$.
+\end{remark}
+
+\subsection{Security Definitions}
+
+\begin{definition}[Finite-Term Security]
+The following security notion is defined wrt a non-local QPT $\qA =
+(\qA_0, \qA_1, \qA_2)$, and a distribution $D_\qC$ over $\qC$:
+
+\begin{description}
+\item [$\expb{\DSL, \qA}{fin}{lessor}(1^\secp, D_\qC)$:] $ $
+\begin{enumerate}
+\item The challenger $\qCh$ samples $P \leftarrow D_\qC$, computes
+$(\qP_0, \vk_0), (\qP_1, \vk_1) \gets \Sh(P)$ and sends $\qP_0,
+\qP_1$ to $\qA_0, \qA_1$ respectively.
+
+\item $\qCh$ receives $(\cert_0, \rho_0), (\cert_1, \rho_1)$ from $\qA_0,
+\qA_1$ respectively.
+
+\item If $\Vrfy(i, \vk_i, \cert_i) = \top$ for some $i \in \bit$,
+$\qCh$ samples $x^* \gets \bit^\secp$ and sends $(x^*, \rho_0, \rho_1)$ to
+$\qA_2$. Otherwise, it outputs $\bot$.
+
+\item $\qA_2$ sends $y^*$ to $\qCh$. If $y^* = P(x^*)$, $\qCh$
+outputs $\top$. Else, it outputs $\bot$.
+
+\end{enumerate}
+
+\end{description}
+
+A DSL scheme $\DSL$ has deletion security if for all QPT adversaries
+$\qA$, the following holds:
+
+$$\Pr\Big[\expb{\DSL, \qA}{fin}{lessor}(1^\secp, D_\qC) \ra \top\Big]
+\le \negl(\secp)$$
+\end{definition}
+
+\begin{definition}[Secrecy]
+
+The following security notion is defined wrt a QPT
+adversary $\qA$:
+
+\begin{description}
+\item [$\expa{\DSL, \qA}{ind}(1^\secp, b)$:] $ $
+\begin{enumerate}
+\item $\qA$ sends $(P^0, P^1)$ and $i \in \bit$
+to $\qCh$. $\qCh$ runs $(\qP_0, \vk_0),
+(\qP_1, \vk_1) \leftarrow \Sh(P^b)$ and sends $\qP_i$ to $\qA$.
+\item
+$\qA$ sends $b'$ to $\qCh$. $\qCh$ outputs $b'$ as the final
+output.
+\end{enumerate}
+
+$$\bigg\lvert \Pr\Big[\expa{\DSL, \qA}{ind}(1^\secp, 0)=1\Big]
+-
+\Pr\Big[\expa{\DSL, \qA}{ind}(1^\secp, 1)=1\Big]
+\bigg\rvert \le \negl(\secp)$$
+\end{description}
+\end{definition}
+
+\begin{comment}
+\begin{definition}[Strong Deletion Security]
+TBD. ($\qA_2$ learns nothing more than having black-box access
+to $P$).
+\end{definition}
+
+\begin{definition}[Secrecy]
+
+The following security notion is defined wrt a QPT adversary $\qA$:
+
+\begin{description}
+\item [$\expa{\DSL, \qA}{ind}(1^\secp, \coin)$:] $ $
+\begin{enumerate}
+\item $\qA$ sends $(P^0, P^1) \in \qC^2$ and $b \in \bit$
+to the challenger $\qCh$. $\qCh$ runs $(\qP_0, \vk_0),
+(\qP_1, \vk_1) \leftarrow \Sh(P^\coin)$ and sends $\qP_b$ to
+$\qA$.
+\item $\qA$ sends $\coin'$ to $\qCh$ which is the final output of
+the experiment.
+\end{enumerate}
+\end{description}
+
+A DSL scheme $\DSL$ has secrecy if the following notion holds for
+all QPT adversaries $\qA$:
+
+$$\bigg\lvert \Pr\Big[\expa{\DSL, \qA}{ind}(1^\secp, 0)=1\Big]
+-
+\Pr\Big[\expa{\DSL, \qA}{ind}(1^\secp, 1)=1\Big]
+\bigg\rvert \le \negl(\secp)$$
+
+\end{definition}
+\end{comment}
+
+\section{Inapplicability of SSL Impossibility}
+
+We will now briefly review the impossibility result regarding SSL
+by Ananth and LaPlaca \cite{EC:AnaLaP21}. They showed the existence
+of a class of unlearnable circuits that cannot be securely-leased
+(and thereby copy-protected). The corresponding circuit class $\qC$
+consists of circuits of the form $C_{a, b, r, \pk, \calO}(x)$,
+described as follows:
+
+\begin{description}
+\item[\underline{$C_{a, b, r, \pk, \calO}(x)$:}] $ $
+\begin{enumerate}
+\item If $x = 0 \ldots 0$, output $\QFHE.\qEnc(\pk, a; r) \| \calO
+\| \pk$.
+\item Else, if $x = a$, output $b$.
+\item Otherwise, output $0 \ldots 0$.
+\end{enumerate}
+\end{description}
+
+The corresponding description $D_\qC$ samples a circuit $C$ from
+$\qC$ as follows:
+\begin{description}
+\item[\underline{$D_\qC$:}] $ $
+\begin{enumerate}
+\item Sample $a, b, r \gets \bit^\secp$.
+\item Compute $(\pk,\sk,\rho_\evk) \gets \QFHE.\qGen(1^\secp)$.
+\item Compute $\calO \gets \Obf \big(\QFHE.\qDec(\sk, \cdot), b, 
+\sk \| r\big)$.
+\item Output $C_{a, b, r, \pk, \calO}$.
+\end{enumerate}
+\end{description}
+
+It was shown in \cite{EC:AnaLaP21} that given (quantum) black-box
+access to $C$ for $C \gets D_\qC$, it is infeasible to learn the
+description of the circuit. However, given access to a quantum
+implementation $(U_C, \rho_C)$ of $C \in \qC$, there exists an
+algorithm $\qB$ that learns the description of $C$. Since this
+description is classical, it can be copied. The algorithm $\qB$ is
+described as follows:
+
+\begin{description}
+\item[\underline{$\qB(U_C, \rho_C)$}:] $ $
+\begin{enumerate}
+\item Compute $(\rho', \ct_1 \| \calO'\| \pk') \gets U_C(\rho_C,
+0\ldots0)$.
+\item Compute $\sigma \| \ct_2 \gets \QFHE.\Eval(U_C(\rho', \cdot),
+\ct_1)$.
+\item Compute $\sk' \| r \gets \calO(\ct_2)$.
+\item $a' \gets \QFHE.\Dec(\sk', \ct_1), b' \gets \QFHE.\Dec(\sk',
+\ct_2)$.
+\item Compute $a' \gets \QFHE.\Dec(\sk', \ct_1), b' \gets
+\QFHE.\Dec(\sk', \ct_2)$.
+\item Output $C_{a', b', r', \pk', \calO'}$.
+\end{enumerate}
+\end{description}
+
+It is trivially true that $\pk' = \pk$ and $\calO' = \calO$. Let us
+observe why $\qB$ succeeds in obtaining $a' = a$ and $b' = b$. After
+Step 1., the state $\rho'$ is close to the state $\rho_C$ by
+correctness of evaluation. From the evaluation correctness of
+$\QFHE$, $\ct_2$ is a valid encryption of $b$. Therefore, $\sk' =
+\sk$ is output by the lockable obfuscation circuit $\calO$. Finally,
+$\sk$ is used to decrypt $\ct_1, \ct_2$ to obtain $a' = a$ and
+$b'=b$ respectively. Furthermore, it was shown in their work that
+$\sigma$ can be used to obtain a state $\rho''$ close to the state
+$\rho_C$ which can then be deleted.
+
+Observe now that an attack of the above kind does not work in the
+distributed setting. This is because a quantum share $\qP_i$ of a
+circuit $P \in \qC$ would only reveal an additive share of the FHE
+ciphertext $\ct_1$ in Step 1. Hence, it is unclear if the
+description of $\qP_i$ (or $P$) can be learnt before deletion, even
+in a way that the descriptions are only revealed after collusion.
+
+Upon looking into it further, it seems like it should be impossible,
+at least for Encrypted Software Leasing (ESL). If the adversary could
+do a malleability attack, then that is enough. To show such an attack
+always exists is much harder than in the nice QFHE case though. One thing is
+that a malleability attack should exist (which is a classical crypto
+question) but we also need the fact that the attack doesn't disturb
+the state.
+
+\begin{comment}
+\begin{remark}[Necessity of Secrecy]
+Do we need secrecy in the first stage to beat SSL impossibility?
+\end{remark}
+\end{comment}
+
+\section{DSL for Puncturable Functions}
+
+\begin{itemize}
+\item Try to construct from dIO-CD + PKE (similar to FSS
+construction).
+
+\item For the dIO-CD + PKE construction, we need to have a distributed
+diO. $\qA_0$ receives one copy, $\qA_1$ receives another (note that we
+don't care about the secret keys $\sk_0, \sk_1$ here as we can assume
+both have both unlike in the construction). $\qA_0$ deletes and
+$\qA_1$ deletes and they combine, so it is even weaker than
+2-collusion-resistant security.
+\end{itemize}
+
+\section{Distributed One-Time Programs}
+
+One time programs allow a software to be encoded into a format that
+enables only a single evaluation. Unfortunately, deterministic programs
+cannot be one-time protected. In this work, we explore the setting
+where a deterministic program can be split between two parties. In
+this setting, we explore whether it is possible to enforce only a single
+distributed evaluation. We show a feasibility where the program shares
+are entangled and prove that such entanglement is necessary.\\
+
+\noindent
+\textbf{Use Case:} A party can
+distribute a program to two servers who are supposed to execute the
+software within a short period. For proof, they can post commitments
+to their shares online or on the blockchain. During this time, one
+might be able to enforce that the servers do not directly collude with
+each other due to the fear of apprehension. However, they might
+eventually sell their data to random entities on the black market.
+This notion guarantees that if the initial evaluation was correctly performed
+in a distributed fashion, nothing can be done to evaluate a second time.
+
+\subsection{Definition}
+
+A Distributed One-Time Program (D-OTP) scheme $\DOTP =
+(\KG,\TG,\TE)$ has the following syntax:
+
+\begin{description}
+
+\item [Syntax:] $ $
+\item $\KG(f) \rightarrow (\tP_0, \tP_1, \sk)$: The key-generation algorithm
+outputs two classical programs $\tP_0, \tP_1$ and a secret-key $\sk$.
+
+\item $\TG(\sk) \ra (\qtk_0, \qtk_1)$: The token-generation algorithm takes
+in a secret-key and generates (possibly-entangled) quantum tokens
+$\qtk_0, \qtk_1$.
+
+\item $\TE(x, \qtk_i, \tP_i) \rightarrow y_i$:
+The token-evaluation algorithm takes a token $\qtk_i$, a
+program $\tP_i$, and a classical input $x$. It
+outputs a classical evaluation-share $y_i$.
+
+\item [Evaluation Correctness:] The following holds for every input
+$x$ in the domain of $f$:
+
+\begin{align}
+\Pr\left[
+y_0 \xor y_1 = f(x)
+\ :
+\begin{array}{ll}
+(\tP_0, \tP_1, \sk) \leftarrow \KG(f)\\
+(\qtk_0, \qtk_1) \gets \TG(\sk)\\
+\forall i\in\bit: y_i \leftarrow \TE(x, \qtk_i, \tP_i)
+\end{array}
+\right] \geq 1 - \negl(\secp)
+\end{align}
+\end{description}
+
+\begin{remark}
+Due to the gentle-measurement lemma, the evaluation correctness
+implies that the state described by $\qtk_0, \qtk_1$ can be evaluated
+on without almost disturbing the state. This seems to contradict any
+meaningful notion of one-time security. However, our distributed
+notion will make use of the fact that the non-local adversary must
+produce a correct distributed evaluation first before collusion is
+allowed. Since the tokens $\qtk_0, \qtk_1$ can be entangled, $y_0$ and
+$y_1$ can be truly random in a local-sense (even for a fixed global
+token state).
+\end{remark}
+
+
+\begin{definition}[Distributed One-Time Security]
+Consider the following experiment between a challenger $\qCh$ and a
+QPT non-local adversary $\qA = (\qA_0, \qA_1, \qA_2)$ for the scheme
+$\DOTP = (\KG, \TG, \TE)$ and a function $f$ sampled from a
+distribution $\cD$:
+
+\begin{description}
+
+\item $\underline{\expb{\DOTP, \qA}{d}{ots}}(1^\secp, f, \cD)$:
+\begin{enumerate}
+\item $\qCh$ generates $f \gets \cD$, $(\tP_0, \tP_1, \sk) \gets
+\KG(f)$ and
+$(\qtk_0, \qtk_1) \gets \TG(\sk)$.
+\item $\qCh$ sends $(\qtk_i, \tP_i)$ to adversary $\qA_i$ for each $i
+\in \bit$.
+\item For $i \in \bit$, if adversary $\qA_i$ sends a register $R_i$,
+run $\tP_i$ on it and measure the output register to get outcome
+$y_i$. Send the register $R_i$ to adversary $\qA_2$.
+\item Define $y \seteq y_0 \xor y_1$.
+\item For each $i \in \bit$, wait to receive register $R_i'$ from
+$\qA_2$. Then, run $\tP_i$ on it and measure the output register
+to get outcome $y_i'$.
+
+\item Define $y' \seteq y_0' \xor y_1'$.
+
+\item If $y' \neq y$, output $\top$. Else, output $\bot$.
+\end{enumerate}
+\end{description}
+
+We require the following condition to hold:
+
+
+$$\Pr\Big[\expb{\DOTP, \qA}{d}{ots}(1^\secp, f, \cD) \ra \top\Big]
+\le \negl(\secp)$$
+
+\end{definition}
+
+Notice that the above definition allows collusion after the first
+distributed evaluation. As per the definition, $f$ can even be a
+deterministic function. It remains to be seen which functions can be
+handled. At the very least, $f$ must be unlearnable given a single
+black-box query, as the ``collusion-stage" adversary $\qA_2$ can
+compute the first evaluation $y$. The quintessential example would be
+a PRF family $\{F_k\}_k$, i.e. $P = F_k$ for $k \gets \bit^\secp$
+which is clearly unlearnable.
+
+\begin{comment}
+\begin{remark}
+We will also consider a weaker notion $\expc{\DOTP,\qA}{d}{ots}{weak}$
+where $R_0, R_1$ are sent back to $\qA_0, \qA_1$ who then send $R_0',
+R_1'$. In other words, collusion is never allowed in this variant, so
+$\qA_2$ is not part of the experiment.
+\end{remark}
+\end{comment}
+
+\subsection{Local One-Time Authentication}
+
+A Local One-Time Authentication (LOTA) scheme is a tuple of 5
+algorithms $\LOTA = (\KG, \TG, \qSign, \Vrfy)$ with the
+following syntax:
+
+\begin{description}
+\item $\KG(1^\secp) \ra \sk$: The key-generation algorithm outputs a
+classical secret-key $\sk$.
+\item $\TG(\sk) \ra (\qtk_0, \qtk_1)$: The token-generation algorithm
+takes the secret-key $\sk$ as input. It outputs (possibly-entangled)
+quantum token states $(\qtk_0, \qtk_1)$.
+\item $\qSign(x, \qtk_i) \ra z$: The signing algorithm takes as
+input a token state $\qtk_i$ and a message $x$. It outputs a signature $z$.
+\item $\Vrfy(\sk, (x, z)) \ra \top/\bot$ The verification algorithm
+$\Vrfy$ takes as input the secret-key $\sk$ and a message-signature
+pair $(x, z)$. It outputs $\top$ or $\bot$.
+
+\item[Same Signatures:] The following holds for all $x \in \bit$:
+
+\begin{align}
+\Pr\left[
+z_0 = z_1
+\ :
+\begin{array}{ll}
+\sk \gets \KG(1^\secp)\\
+(\qtk_0, \qtk_1) \gets \TG(\sk)\\
+z_0 \leftarrow \qSign(x, \qtk_0)\\
+z_1 \leftarrow \qSign(x, \qtk_1)
+\end{array}
+\right] \geq 1 - \negl(\secp)
+\end{align}
+
+\item[Verification Correctness:] The following holds for all
+$x\in\bit$ and $i \in \bit$:
+
+\begin{align}
+\Pr\left[
+\Vrfy(\sk, (x,z)) \ra \top
+\ :
+\begin{array}{ll}
+\sk \gets \KG(1^\secp)\\
+(\qtk_0, \qtk_1) \gets \TG(\sk)\\
+z \leftarrow \qSign(x, \qtk_i)
+\end{array}
+\right] \geq 1 - \negl(\secp)
+\end{align}
+
+
+\end{description}
+
+\begin{definition}[One-Time Authentication]
+Consider the following experiment $\expa{\LOTA,
+\qA}{ota}(1^\secp)$ between a challenger $\qCh$ and a QPT adversary
+$\qA$:
+\begin{description}
+\item \underline{$\expa{\LOTA, \qA}{ota}(1^\secp)$}:
+\begin{enumerate}
+\item $\qCh$ runs $\sk \gets \KG(1^\secp)$ and
+$(\qtk_0, \qtk_1) \gets \TG(\sk)$.
+\item $\qCh$ sends $\qtk_0$ to $\qA$.
+\item $\qA$ sends $(z, \widetilde{z})$ to $\qCh$.
+\item If $\Vrfy(\sk, (0, z)) = \Vrfy(\sk, (1, \widetilde{z})) =
+\top$, $\qCh$ outputs $\top$. Otherwise, it output $\bot$.
+\end{enumerate}
+\end{description}
+
+We require that the following condition holds:
+
+$$\Pr[\expa{\LOTA, \qA}{ota}(1^\secp) = \top] \le \negl(\secp)$$
+\end{definition}
+
+
+\subsection{Construction in the Oracle Model}
+
+We will use the following idealized oracles:
+\begin{itemize}
+\item Random Oracle $H$.
+\item VBB Obfuscation $\Obf$.
+\item Local One-Time Authentication Scheme $\LOTA = \LOTA.(\KG, \TG,
+    \qSign,
+\Vrfy)$.
+\end{itemize}
+
+\begin{description}
+\item $\underline{\KG(f)}:$
+\begin{itemize}
+\item Sample $\sk \gets \LOTA.\KG(1^\secp)$.
+\item Let $P$ be the following program and $\tP \seteq \Obf(P)$.
+\begin{description}
+\item $\underline{P_0 (x, z)}:$
+\begin{itemize}
+\item If $\Vrfy(\sk, (x, z)) = \bot$, output $\bot$.
+\item Otherwise, output $P(x) \xor H(z)$.
+\end{itemize}
+\end{description}
+
+\item Output $(\tP_0, \tP_1, \sk)$.
+\end{itemize}
+
+\item $\underline{\TG(\sk)}:$
+\begin{itemize}
+\item Compute $(\qtk_0, \qtk_1) \gets \LOTA.\TG(\sk)$.
+\item Output $(\qtk_0, \qtk_1)$.
+\end{itemize}
+
+\item $\underline{\TE(x, \qtk_i, \tP_i)}:$
+\begin{itemize}
+\item Compute $z \gets \qSign(x, \qtk_i)$.
+\item Compute and output $y_i \seteq \tP_i(x, z)$.
+\end{itemize}
+
+
+\end{description}

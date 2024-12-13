@@ -1,0 +1,33 @@
+\section{Delete-before-Observe FSS}\label{sec:dbo-fss}
+
+\subsection{Motivation}
+
+The motivation for Delete-before-Observe FSS (DbO-FSS) is as
+follows:
+
+\begin{enumerate}
+\item A client can delegate a function $f$ among two servers such
+that neither server learns anything about $f$. Importantly, the
+servers can obtain additive shares of function evaluations.
+
+\item Additivity ensures that reconstruction is efficient in terms
+of communication and computation.
+
+\item Additivity allows for share compression, which is especially
+useful if multiple parties need to delegate their own policies
+(functions), and the servers need to compute on the outputs.
+
+\item The servers can keep performing computation and reconstruct
+only at some point in the future to publicly reveal some outputs.
+
+\item Before the outputs are reconstructed, a client can request its
+function shares to be deleted if it is suspicious of collusion.
+\end{enumerate}
+
+
+\subsection{Definition}
+
+\subsection{Impossibility}
+
+\subsection{Feasibility with Entanglement}
+

@@ -1,9 +1,8 @@
-\newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{BGI{\etalchar{+}}18}
+\begin{thebibliography}{AL21}
 
-\bibitem[BGI{\etalchar{+}}18]{ITCS:BGILT18}
-Elette Boyle, Niv Gilboa, Yuval Ishai, Huijia Lin, and Stefano Tessaro.
-\newblock Foundations of homomorphic secret sharing.
-\newblock In Anna~R. Karlin, editor, {\em ITCS 2018}, volume~94, pages 21:1--21:21. {LIPIcs}, January 2018.
+\bibitem[AL21]{EC:AnaLaP21}
+Prabhanjan Ananth and Rolando~L. {La Placa}.
+\newblock Secure software leasing.
+\newblock In Anne Canteaut and Fran\c{c}ois-Xavier Standaert, editors, {\em EUROCRYPT~2021, Part~II}, volume 12697 of {\em {LNCS}}, pages 501--530. Springer, Heidelberg, October 2021.
 
 \end{thebibliography}

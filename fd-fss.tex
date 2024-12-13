@@ -1,0 +1,27 @@
+\section{Fully-Deletable FSS}\label{fd-fss}
+
+\subsection{Motivation}
+
+The motivation for Fully-Deletable FSS (FD-FSS) is as follows:
+
+\begin{enumerate}
+\item Allows to delegate computation of a function $f$ to 2 servers
+such that neither server learns any information about $f$.
+
+\item Outputs can be reconstructed publicly (without need to store a
+secret key).
+
+\item Additionally, it allows for security against collusion, which
+could be a significant issue in the long run. Either of the
+2 parties can provide a certificate, which when verified, guarantees
+that the servers learn nothing about $f$, even upon collusion.
+
+\item Furthermore, using quantum deletion certificates, the client
+can simultaneously perform verification and reconstruct the results
+of evaluations.
+\end{enumerate}
+
+\subsection{Definition}
+
+\subsection{Construction from FHE}
+

@@ -1,0 +1,99 @@
+\section{Introduction}\label{sec:motive}
+
+In Secure Software Leasing (SSL) with finite-term security, a
+function can be leased to a server such that the server is able to
+evaluate the function an unbounded polynomially many times.
+Additionally, the server can later be asked to revoke its lease in a
+way that passes certain verification. It is guaranteed that upon
+successful verification, the server no longer has the ability to
+evaluate the function.  Clearly, if a function is learnable (it can
+be replicated given only black-box access), then it cannot be
+securely leased.  Consequently, one might hope to target the class
+of unlearnable functions.  However, it was shown in the work of
+Ananth and LaPlaca \cite{EC:AnaLaP21} that there exist unlearnable
+functions for which this notion is impossible to achieve. In this
+work, we explore the setting where a client can lease out a function
+to two servers $S_0$ and $S_1$ in a distributed sense, such that
+they can compute additive shares of evaluations of the function. We
+will consider the following security notion:
+
+\begin{description}
+\item \textbf{Finite-Term Security:} This
+security notion guarantees that the following events cannot both
+happen:
+
+\begin{enumerate}
+\item Either server provides a certificate of revocation that
+passes verification.
+\item $S_0, S_1$ produce quantum states $\rho_0, \rho_1$ which are
+given to a QPT adversary $\qA$. Given a random input $x^*$, $\qA$
+produces the correct output of the software on $x^*$.
+\end{enumerate}
+\end{description}
+
+Other than finite-term security, the stronger notions of
+infinite-term security and copy-protection have also been studied in
+the literature. These notions do not involve deletion certificates
+and only require the adversary to produce two working copies of the
+software. While infinite-term security requires the copies to work
+with the honest evaluation algorithm, copy protection is even
+stronger and permits arbitrary evaluations on the copies.  Later on,
+we will also explore extensions of these notions to the distributed
+setting.
+
+\subsection{Motivation}
+
+The motivation for the different aspects of the notion are as
+follows:
+
+\begin{itemize} \item \textbf{Additive Reconstruction:} The 
+requirement of additive secret-sharing is highly desirable as
+opposed to arbitrary (potentially even quantum) reconstruction.
+Recall that in the case of SSL, a single party obtains evaluations
+in the clear.  In applications where a server obtains different
+software from several clients and needs to compute on the individual
+outputs, it can do so easily. This is non-trivial in the distributed
+setting. Additive secret-shares offer a middle ground by allowing
+linear computations on the outputs for free. Moreover, they are in
+the correct format for MPC protocols which can allow for more
+general computations.  Furthermore, additive reconstruction enables
+efficient reconstruction, both in terms of computation and
+communication.
+
+\item \textbf{Finite-Term Security:} It can be
+reasonable to assume that the servers do not collude in the short
+term, but over time they may collude or an adversary may
+get access to their data. This security notion guarantees that such
+a data breach from both servers does not grant the ability to
+evaluate the software.
+
+\item \textbf{Secrecy:} Apart from finite term security, we also
+require that if the servers do not collude, they do not learn
+anything about the leased program. This requirement is similar to
+that of Function Secret Sharing (FSS). This provides a two-tier
+security guarantee. For instance, the servers can be used to
+delegate a decryption functionality without them being able to
+decrypt themselves in real time. Although they may decrypt past
+ciphertexts after collusion, that data may not be very relevant
+later on.  \end{itemize}
+
+Consider now the following example use case for this notion:
+
+\paragraph{Use Case.} We will consider a delegation scenario where a
+client needs to delegate a function $f$. Of course, it can use an
+FHE ciphertext and send it to a single server but this complicates
+the decryption procedure. Also, if the client's secret-key is leaked
+at any point in the future, the function can be completely learnt.
+More importantly though, multiple FHE ciphertexts cannot be
+evaluated on and compressed easily, which can be especially
+important when multiple clients are involved. One could also
+consider Multi-Key FHE which would not only be computationally
+expensive, but would need distributed decryption. In such a
+scenario, Function Secret Sharing (FSS) can prove to be a  good
+alternative due to the additive reconstruction property, albeit at
+the cost of utilizing two servers.  However, there is now the
+possibility that in the long term, the servers may be breached,
+providing the adversary with the ability to evaluate the software.
+Hence, DSL can also be viewed as an extension of FSS to the quantum
+setting, where it is upgraded with an SSL like guarantee. 
+
